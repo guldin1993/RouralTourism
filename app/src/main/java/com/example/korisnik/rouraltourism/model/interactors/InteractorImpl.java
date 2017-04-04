@@ -42,6 +42,7 @@ public class InteractorImpl extends BaseInteractorImpl implements Interactor {
             public DataContainer call(List<Location> locations, List<Ratings> ratings) {
                 List<Location> locationList = new ArrayList<>();
                 List<String>  locationIdList = new ArrayList<String>();
+                List<Location> locationRatedList = new ArrayList<Location>();
 
                 for (Location location : locations) {
                     if (location.getSubtype().contains("10")) {
@@ -53,9 +54,10 @@ public class InteractorImpl extends BaseInteractorImpl implements Interactor {
                                     location.setRatings(ratings.get(i).getRating());
                                 }
                             }
+                        locationRatedList.add(location);
                     }
                 }
-                return new DataContainer(locationList);
+                return new DataContainer(locationRatedList);
             }
         }).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

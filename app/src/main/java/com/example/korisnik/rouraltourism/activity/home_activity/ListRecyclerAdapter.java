@@ -49,10 +49,11 @@ public class ListRecyclerAdapter extends RecyclerView.Adapter<ListRecyclerAdapte
         BasicLocationData basicData = locationList.get(position).getMeta().getBasic();
         imageUri = Uri.parse(IMAGE_URL + locationList.get(position).getId());
         holder.locationImage.setImageURI(imageUri);
-            ratings = locationList.get(position - 1).getRatings();
+            if (position != 0)
+                ratings = locationList.get(position - 1).getRatings();
             ratings1 = locationList.get(position).getRatings();
-            ratings2 = locationList.get(position + 1).getRatings();
-
+            if (position != locationList.size()-1)
+                ratings2 = locationList.get(position + 1).getRatings();
 
         if (basicData.getWebLocation().equals("") || basicData.getWebLocation().isEmpty()) {
             holder.setLlWeb(holder.llWeb);
@@ -81,7 +82,7 @@ public class ListRecyclerAdapter extends RecyclerView.Adapter<ListRecyclerAdapte
         else if(ratings < 5f && ratings >= 4f || ratings1 < 5f && ratings1 >= 4f || ratings2 < 5f && ratings2 >= 4f){
             setFourStars(holder);
         }
-        else if(ratings < 6f && ratings >= 5f || ratings1 < 6f && ratings1 >= 5f || ratings2 < 6f && ratings2 >= 5f){
+        else if(ratings < 6f && ratings >= 5f || ratings1 < 6f && ratings1 >= 5f || ratings2 < 6f && ratings >= 5f){
             setFiveStars(holder);
         }
         else
