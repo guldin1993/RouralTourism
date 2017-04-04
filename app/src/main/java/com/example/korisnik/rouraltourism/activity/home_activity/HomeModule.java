@@ -1,5 +1,6 @@
 package com.example.korisnik.rouraltourism.activity.home_activity;
 
+import com.example.korisnik.rouraltourism.activity.home_activity.adapter.ListRecyclerAdapter;
 import com.example.korisnik.rouraltourism.base.PerActivity;
 import com.example.korisnik.rouraltourism.activity.home_activity.presenter.HomePresenter;
 import com.example.korisnik.rouraltourism.activity.home_activity.presenter.HomePresenterImpl;

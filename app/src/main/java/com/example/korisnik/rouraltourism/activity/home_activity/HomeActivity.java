@@ -7,6 +7,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.example.korisnik.rouraltourism.R;
+import com.example.korisnik.rouraltourism.activity.home_activity.adapter.ListRecyclerAdapter;
+import com.example.korisnik.rouraltourism.activity.home_activity.adapter.RecyclerListener;
 import com.example.korisnik.rouraltourism.activity.tourist_destination_activity.TouristDestinationSingle;
 import com.example.korisnik.rouraltourism.base.RouralTourismApplication;
 import com.example.korisnik.rouraltourism.activity.home_activity.presenter.HomePresenter;
@@ -19,7 +21,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class HomeActivity extends AppCompatActivity implements HomeView, RecyclerListener{
+public class HomeActivity extends AppCompatActivity implements HomeView, RecyclerListener {
     @BindView(R.id.my_recycler_view)
     RecyclerView recyclerView;
 
