@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".activity.tourist_destination_activity.TouristDestinationSingle"
+    tools:showIn="@layout/activity_single">
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/sdv_cover_image"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/sdv_image_hight"
+        android:layout_alignParentTop="true"
+        fresco:placeholderImage="@mipmap/foto_bg" />
+
+    <TextView
+        android:id="@+id/tv_title_single"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/sdv_cover_image" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/tv_title_single">
+
+        <ImageView
+            android:id="@+id/iv_ico_sleeping"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@mipmap/ico_spavanje" />
+
+        <ImageView
+            android:id="@+id/iv_ico_food"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@id/iv_ico_sleeping"
+            android:background="@mipmap/ico_hrana" />
+
+        <ImageView
+            android:id="@+id/iv_ico_coffe"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@id/iv_ico_coffe"
+            android:background="@mipmap/ico_kava" />
+
+        <ImageView
+            android:id="@+id/iv_ico_vine"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@mipmap/ico_vino" />
+
+        <ImageView
+            android:id="@+id/iv_recreation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@mipmap/ico_rekreacija" />
+
+        <ImageView
+            android:id="@+id/iv_wi_fi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@mipmap/ico_wi_fi" />
+
+        <ImageView
+            android:id="@+id/iv_opg1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@mipmap/ico_opg" />
+
+        <ImageView
+            android:id="@+id/iv_opg2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@mipmap/ico_opg_2" />
+    </LinearLayout>
+
+
+</RelativeLayout>
