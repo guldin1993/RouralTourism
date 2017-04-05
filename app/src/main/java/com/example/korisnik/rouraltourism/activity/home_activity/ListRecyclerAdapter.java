@@ -33,9 +33,6 @@ public class ListRecyclerAdapter extends RecyclerView.Adapter<ListRecyclerAdapte
     private RecyclerListener listener;
     private Uri imageUri;
     float ratings = 0f;
-    float ratings1 = 0f;
-    float ratings2 = 0f;
-
 
     @Override
     public Holder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -49,12 +46,7 @@ public class ListRecyclerAdapter extends RecyclerView.Adapter<ListRecyclerAdapte
         BasicLocationData basicData = locationList.get(position).getMeta().getBasic();
         imageUri = Uri.parse(IMAGE_URL + locationList.get(position).getId());
         holder.locationImage.setImageURI(imageUri);
-            if (position != 0)
-                ratings = locationList.get(position - 1).getRatings();
-            ratings1 = locationList.get(position).getRatings();
-            if (position != locationList.size()-1)
-                ratings2 = locationList.get(position + 1).getRatings();
-
+        ratings = locationList.get(position).getRatings();
         if (basicData.getWebLocation().equals("") || basicData.getWebLocation().isEmpty()) {
             holder.setLlWeb(holder.llWeb);
         }
@@ -70,22 +62,17 @@ public class ListRecyclerAdapter extends RecyclerView.Adapter<ListRecyclerAdapte
         holder.tvSoruceTelephone.setText(basicData.getPhoneLocation());
         holder.tvSourceMail.setText(basicData.getMailLocation());
         holder.tvSourceWeb.setText(basicData.getWebLocation());
-        if(ratings < 2f && ratings >= 1f || ratings1 < 2f && ratings1 >= 1f || ratings2 < 2f && ratings2 >= 1f){
+        if (ratings < 2f && ratings >= 1f) {
             setOneStar(holder);
-        }
-        else if(ratings < 3f && ratings >= 2f || ratings1 < 3f && ratings1 >= 2f || ratings2 < 3f && ratings2 >= 2f){
+        } else if (ratings < 3f && ratings >= 2f) {
             setTwoStars(holder);
-        }
-        else if(ratings < 4f && ratings >= 3f || ratings1 < 4f && ratings1 >= 3f || ratings2 < 4f && ratings2 >= 3f){
+        } else if (ratings < 4f && ratings >= 3f) {
             setThreeStars(holder);
-        }
-        else if(ratings < 5f && ratings >= 4f || ratings1 < 5f && ratings1 >= 4f || ratings2 < 5f && ratings2 >= 4f){
+        } else if (ratings < 5f && ratings >= 4f) {
             setFourStars(holder);
-        }
-        else if(ratings < 6f && ratings >= 5f || ratings1 < 6f && ratings1 >= 5f || ratings2 < 6f && ratings >= 5f){
+        } else if (ratings < 6f && ratings >= 5f) {
             setFiveStars(holder);
-        }
-        else
+        } else
             setZeroStars(holder);
     }
 
