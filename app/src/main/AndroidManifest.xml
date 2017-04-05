@@ -33,7 +33,12 @@
         <activity
             android:name=".activity.tourist_destination_activity.TouristDestinationSingle"
             android:label="@string/title_activity_single"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activity.image_activity.ImageActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_image"
+            android:theme="@style/FullscreenTheme"></activity>
     </application>
 
 </manifest>

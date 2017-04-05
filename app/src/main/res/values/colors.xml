@@ -4,5 +4,8 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="appGreen">#12530f</color>
-    <color name="backgroundGrey">#adafad</color>
+    <color name="backgroundGrey">#dadcda</color>
+    <color name="lighterGreyLine">#FF435843</color>
+
+    <color name="black_overlay">#66000000</color>
 </resources>

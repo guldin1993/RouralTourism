@@ -1,4 +1,4 @@
-package com.example.korisnik.rouraltourism.activity.home_activity;
+package com.example.korisnik.rouraltourism.activity.home_activity.adapter;
 
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
@@ -27,7 +27,7 @@ import butterknife.ButterKnife;
 
 public class ListRecyclerAdapter extends RecyclerView.Adapter<ListRecyclerAdapter.Holder> {
 
-    public static String IMAGE_URL = "http://slavonijaturizam.eu/cms/photo/";
+    public static final String IMAGE_URL = "http://slavonijaturizam.eu/cms/photo/";
 
     private List<Location> locationList = new ArrayList<>();
     private RecyclerListener listener;
@@ -36,7 +36,7 @@ public class ListRecyclerAdapter extends RecyclerView.Adapter<ListRecyclerAdapte
 
     @Override
     public Holder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_holder_subcategory, parent ,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.cell_roural_tourism, parent ,false);
         return new Holder(view);
     }
 
@@ -192,6 +192,7 @@ public class ListRecyclerAdapter extends RecyclerView.Adapter<ListRecyclerAdapte
         public Holder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+            itemView.setOnClickListener(this);
         }
 
         @Override

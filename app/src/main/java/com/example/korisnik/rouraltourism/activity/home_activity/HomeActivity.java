@@ -1,17 +1,17 @@
 package com.example.korisnik.rouraltourism.activity.home_activity;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.example.korisnik.rouraltourism.R;
 import com.example.korisnik.rouraltourism.activity.home_activity.adapter.ListRecyclerAdapter;
 import com.example.korisnik.rouraltourism.activity.home_activity.adapter.RecyclerListener;
+import com.example.korisnik.rouraltourism.activity.home_activity.presenter.HomePresenter;
 import com.example.korisnik.rouraltourism.activity.tourist_destination_activity.TouristDestinationSingle;
 import com.example.korisnik.rouraltourism.base.RouralTourismApplication;
-import com.example.korisnik.rouraltourism.activity.home_activity.presenter.HomePresenter;
 import com.example.korisnik.rouraltourism.model.data_model.Location;
 
 import java.util.List;

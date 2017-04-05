@@ -7,7 +7,7 @@ import com.example.korisnik.rouraltourism.R;
  */
 
 public class ListRecyclerWraper {
-    public static final int TYPE_ITEM = R.layout.view_holder_subcategory;
+    public static final int TYPE_ITEM = R.layout.cell_roural_tourism;
 
 
 }

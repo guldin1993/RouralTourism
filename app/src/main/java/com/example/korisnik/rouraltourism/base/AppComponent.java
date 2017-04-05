@@ -2,6 +2,10 @@ package com.example.korisnik.rouraltourism.base;
 
 import com.example.korisnik.rouraltourism.activity.home_activity.HomeComponent;
 import com.example.korisnik.rouraltourism.activity.home_activity.HomeModule;
+import com.example.korisnik.rouraltourism.activity.image_activity.ImageActivityComponent;
+import com.example.korisnik.rouraltourism.activity.image_activity.ImageActivityModule;
+import com.example.korisnik.rouraltourism.activity.tourist_destination_activity.TouristDestinationComponent;
+import com.example.korisnik.rouraltourism.activity.tourist_destination_activity.TouristDestinationModule;
 import com.example.korisnik.rouraltourism.utils.ServiceModule;
 
 import javax.inject.Singleton;
@@ -16,4 +20,6 @@ import dagger.Component;
 @Component(modules = ServiceModule.class)
 public interface AppComponent {
     HomeComponent plus (HomeModule module);
+    TouristDestinationComponent plus (TouristDestinationModule module);
+    ImageActivityComponent plus (ImageActivityModule module);
 }

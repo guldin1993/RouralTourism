@@ -1,83 +1,272 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:fresco="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    android:fillViewport="true"
     tools:context=".activity.tourist_destination_activity.TouristDestinationSingle"
     tools:showIn="@layout/activity_single">
 
-    <com.facebook.drawee.view.SimpleDraweeView
-        android:id="@+id/sdv_cover_image"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/sdv_image_hight"
-        android:layout_alignParentTop="true"
-        fresco:placeholderImage="@mipmap/foto_bg" />
-
-    <TextView
-        android:id="@+id/tv_title_single"
+    <RelativeLayout xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/sdv_cover_image" />
+        android:paddingTop="?attr/actionBarSize">
 
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/iv_cover_image"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/sdv_image_hight"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:paddingBottom="@dimen/content_single_element_bottom_margin"
+            fresco:placeholderImage="@mipmap/foto_bg" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/tv_title_single">
+        <!--  <ImageView
+              android:id="@+id/iv_cover_image"
+              android:layout_width="match_parent"
+              android:layout_height="@dimen/sdv_image_hight"
+              android:layout_alignParentLeft="true"
+              android:layout_alignParentStart="true"
+              android:layout_alignParentTop="true"
+              android:layout_marginBottom="@dimen/content_single_element_bottom_margin" />-->
 
-        <ImageView
-            android:id="@+id/iv_ico_sleeping"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@mipmap/ico_spavanje" />
+            android:paddingTop="@dimen/sdv_image_hight"
+            android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/iv_ico_food"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@id/iv_ico_sleeping"
-            android:background="@mipmap/ico_hrana" />
-
-        <ImageView
-            android:id="@+id/iv_ico_coffe"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@id/iv_ico_coffe"
-            android:background="@mipmap/ico_kava" />
-
-        <ImageView
-            android:id="@+id/iv_ico_vine"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@mipmap/ico_vino" />
-
-        <ImageView
-            android:id="@+id/iv_recreation"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@mipmap/ico_rekreacija" />
-
-        <ImageView
-            android:id="@+id/iv_wi_fi"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@mipmap/ico_wi_fi" />
-
-        <ImageView
-            android:id="@+id/iv_opg1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@mipmap/ico_opg" />
-
-        <ImageView
-            android:id="@+id/iv_opg2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@mipmap/ico_opg_2" />
-    </LinearLayout>
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginBottom="@dimen/content_single_element_bottom_margin"
+                android:paddingTop="5dp"
+                android:textAppearance="@style/TitleSingleAppearance"
+                tools:text="TITLE" />
 
 
-</RelativeLayout>
+            <LinearLayout
+                android:id="@+id/ll_ico_image"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/tv_title_single"
+                android:padding="@dimen/content_single_element_bottom_margin">
+
+                <ImageView
+                    android:id="@+id/iv_ico_sleeping"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/ico_image_left_margin"
+                    android:background="@mipmap/ico_spavanje" />
+
+                <ImageView
+                    android:id="@+id/iv_ico_food"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@id/iv_ico_sleeping"
+                    android:layout_marginLeft="@dimen/ico_image_left_margin"
+                    android:background="@mipmap/ico_hrana" />
+
+                <ImageView
+                    android:id="@+id/iv_ico_coffe"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@id/iv_ico_coffe"
+                    android:layout_marginLeft="@dimen/ico_image_left_margin"
+                    android:background="@mipmap/ico_kava" />
+
+                <ImageView
+                    android:id="@+id/iv_ico_recreation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/ico_image_left_margin"
+                    android:background="@mipmap/ico_rekreacija" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                tools:text="CONTENT" />
+
+            <LinearLayout
+                android:id="@+id/ll_location_images"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/text_view_title_bottom_margin"
+                android:orientation="horizontal">
+
+                <com.facebook.drawee.view.SimpleDraweeView
+                    android:id="@+id/iv_location1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="90dp"
+                    android:layout_weight="1"
+                    fresco:placeholderImage="@mipmap/foto_bg" />
+
+                <com.facebook.drawee.view.SimpleDraweeView
+                    android:id="@+id/iv_location2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="90dp"
+                    android:layout_weight="1"
+                    fresco:placeholderImage="@mipmap/foto_bg" />
+
+                <com.facebook.drawee.view.SimpleDraweeView
+                    android:id="@+id/iv_location3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="90dp"
+                    android:layout_weight="1"
+                    fresco:placeholderImage="@mipmap/foto_bg" />
+
+                <com.facebook.drawee.view.SimpleDraweeView
+                    android:id="@+id/iv_location4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="90dp"
+                    android:layout_weight="1"
+                    fresco:placeholderImage="@mipmap/foto_bg" />
+                <!--
+                                <ImageView
+                                    android:id="@+id/iv_location1"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1" />
+
+                                <ImageView
+                                    android:id="@+id/iv_location2"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1" />
+
+                                <ImageView
+                                    android:id="@+id/iv_location3"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1" />
+
+                                <ImageView
+                                    android:id="@+id/iv_location4"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1" />-->
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/appGreen"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/appGreen"
+                    android:padding="@dimen/text_view_title_bottom_margin"
+                    android:gravity="start"
+                    android:textAppearance="@style/ContentAppearanceWhite"
+                    tools:text="Address" />
+
+                <TextView
+                    android:id="@+id/tv_city"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/text_view_title_bottom_margin"
+                    android:gravity="start"
+                    android:textAppearance="@style/ContentAppearanceWhite"
+                    tools:text="Citiy" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/grey_view_line_height"
+                    android:background="@color/lighterGreyLine" />
+
+                <LinearLayout
+                    android:id="@+id/ll_source_phone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/text_view_title_bottom_margin"
+                    android:layout_marginLeft="@dimen/source_image_left_margin"
+
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="@dimen/source_image_size"
+                        android:layout_height="@dimen/source_image_size"
+                        android:background="@mipmap/ico_phone" />
+
+                    <TextView
+                        android:id="@+id/tv_source_telephone"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/source_image_left_margin"
+                        android:textAppearance="@style/ContentAppearanceWhite"
+                        tools:text="Phone" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_source_mail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/text_view_title_bottom_margin"
+                    android:layout_marginLeft="@dimen/source_image_left_margin"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="@dimen/source_image_size"
+                        android:layout_height="@dimen/source_image_size"
+                        android:layout_gravity="top"
+                        android:background="@mipmap/map_icon_mail" />
+
+                    <TextView
+                        android:id="@+id/tv_source_mail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/source_image_left_margin"
+                        android:textAppearance="@style/ContentAppearanceWhite"
+                        tools:text="Mail" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_web"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/text_view_title_bottom_margin"
+                    android:layout_marginLeft="@dimen/source_image_left_margin"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="@dimen/source_image_size"
+                        android:layout_height="@dimen/source_image_size"
+                        android:layout_gravity="top"
+                        android:background="@mipmap/map_icon_web" />
+
+                    <TextView
+                        android:id="@+id/tv_source_web"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/source_image_left_margin"
+                        android:textAppearance="@style/ContentAppearanceWhite"
+                        tools:text="web" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</ScrollView>
