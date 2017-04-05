@@ -1,4 +1,4 @@
-package com.example.korisnik.rouraltourism.activity.home_activity;
+package com.example.korisnik.rouraltourism.activity.home_activity.adapter;
 
 import com.example.korisnik.rouraltourism.model.data_model.Location;
 

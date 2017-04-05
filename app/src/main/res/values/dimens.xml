@@ -13,6 +13,6 @@
     <dimen name="source_image_left_margin">8dp</dimen>
     <dimen name="source_image_bottom_margin">2dp</dimen>
     <dimen name="star_size">12dp</dimen>
-
+    <dimen name="text_view_title_bottom_margin">3dp</dimen>
     <dimen name="sdv_image_hight">180dp</dimen>
 </resources>
