@@ -14,7 +14,7 @@ import dagger.Provides;
 @Module
 public class ImageActivityModule {
 
-    private final ImageActivityView view;
+    /*private final ImageActivityView view;
 
     public ImageActivityModule(ImageActivityView view) {
         this.view = view;
@@ -30,5 +30,5 @@ public class ImageActivityModule {
     @Provides
     ImagePresenter providesImagePresenter(ImagePresenterImpl imagePresenter){
         return imagePresenter;
-    }
+    }*/
 }
