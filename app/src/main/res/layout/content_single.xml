@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
+    android:background="@color/content_background_green"
     tools:context=".activity.tourist_destination_activity.TouristDestinationSingle"
     tools:showIn="@layout/activity_single">
 
@@ -14,6 +15,64 @@
         android:layout_height="wrap_content"
         android:paddingTop="?attr/actionBarSize">
 
+        <LinearLayout
+            android:id="@+id/linearLayout_cell"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/view_line"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="150dp"
+            android:layout_toLeftOf="@id/linear_text_view_holder"
+            android:layout_toStartOf="@id/linear_text_view_holder"
+            android:background="@mipmap/subcategory_stars_bg"
+            android:gravity="top"
+            android:visibility="visible"
+            android:orientation="horizontal"
+            android:paddingBottom="10dp">
+
+            <ImageView
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"
+                android:background="@mipmap/subcategory_stars_bg" />
+
+            <ImageView
+                android:id="@+id/iv_star_one"
+                android:layout_width="@dimen/star_size"
+                android:layout_height="@dimen/star_size"
+                android:layout_gravity="center"
+                android:background="@mipmap/subcategory_star_brawn" />
+
+            <ImageView
+                android:id="@+id/iv_star_two"
+                android:layout_width="@dimen/star_size"
+                android:layout_height="@dimen/star_size"
+                android:layout_gravity="center"
+                android:background="@mipmap/subcategory_star_brawn" />
+
+            <ImageView
+                android:id="@+id/iv_star_three"
+                android:layout_width="@dimen/star_size"
+                android:layout_height="@dimen/star_size"
+                android:layout_gravity="center"
+                android:background="@mipmap/subcategory_star_brawn" />
+
+            <ImageView
+                android:id="@+id/iv_star_four"
+                android:layout_width="@dimen/star_size"
+                android:layout_height="@dimen/star_size"
+                android:layout_gravity="center"
+                android:background="@mipmap/subcategory_star_brawn" />
+
+            <ImageView
+                android:id="@+id/iv_star_five"
+                android:layout_width="@dimen/star_size"
+                android:layout_height="@dimen/star_size"
+                android:layout_gravity="center"
+                android:background="@mipmap/subcategory_star_brawn" />
+
+        </LinearLayout>
+
         <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/iv_cover_image"
             android:layout_width="match_parent"
@@ -21,6 +80,7 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
+
             android:paddingBottom="@dimen/content_single_element_bottom_margin"
             fresco:placeholderImage="@mipmap/foto_bg" />
 
@@ -36,16 +96,17 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="@dimen/sdv_image_hight"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingTop="@dimen/sdv_image_hight">
 
             <TextView
-                android:id="@+id/tv_title"
+                android:id="@+id/tv_title_cell"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
+                android:paddingLeft="3dp"
                 android:layout_marginBottom="@dimen/content_single_element_bottom_margin"
                 android:paddingTop="5dp"
                 android:textAppearance="@style/TitleSingleAppearance"
@@ -97,6 +158,7 @@
                 android:id="@+id/tv_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:paddingLeft="3dp"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 tools:text="CONTENT" />
 
@@ -104,8 +166,8 @@
                 android:id="@+id/ll_location_images"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/text_view_title_bottom_margin"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:padding="@dimen/text_view_title_bottom_margin">
 
                 <com.facebook.drawee.view.SimpleDraweeView
                     android:id="@+id/iv_location1"
@@ -168,21 +230,21 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/tv_address"
+                    android:id="@+id/tv_address_cell"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/appGreen"
-                    android:padding="@dimen/text_view_title_bottom_margin"
                     android:gravity="start"
+                    android:padding="@dimen/text_view_title_bottom_margin"
                     android:textAppearance="@style/ContentAppearanceWhite"
                     tools:text="Address" />
 
                 <TextView
-                    android:id="@+id/tv_city"
+                    android:id="@+id/tv_city_cell"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="@dimen/text_view_title_bottom_margin"
                     android:gravity="start"
+                    android:padding="@dimen/text_view_title_bottom_margin"
                     android:textAppearance="@style/ContentAppearanceWhite"
                     tools:text="Citiy" />
 
@@ -192,13 +254,13 @@
                     android:background="@color/lighterGreyLine" />
 
                 <LinearLayout
-                    android:id="@+id/ll_source_phone"
+                    android:id="@+id/ll_source_phone_cell"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="@dimen/text_view_title_bottom_margin"
                     android:layout_marginLeft="@dimen/source_image_left_margin"
+                    android:orientation="horizontal"
 
-                    android:orientation="horizontal">
+                    android:padding="@dimen/text_view_title_bottom_margin">
 
                     <ImageView
                         android:layout_width="@dimen/source_image_size"
@@ -206,7 +268,7 @@
                         android:background="@mipmap/ico_phone" />
 
                     <TextView
-                        android:id="@+id/tv_source_telephone"
+                        android:id="@+id/tv_source_telephone_cell"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/source_image_left_margin"
@@ -219,9 +281,9 @@
                     android:id="@+id/ll_source_mail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="@dimen/text_view_title_bottom_margin"
                     android:layout_marginLeft="@dimen/source_image_left_margin"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:padding="@dimen/text_view_title_bottom_margin">
 
                     <ImageView
                         android:layout_width="@dimen/source_image_size"
@@ -230,7 +292,7 @@
                         android:background="@mipmap/map_icon_mail" />
 
                     <TextView
-                        android:id="@+id/tv_source_mail"
+                        android:id="@+id/tv_source_mail_cell"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/source_image_left_margin"
@@ -240,12 +302,12 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/ll_web"
+                    android:id="@+id/ll_web_cell"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="@dimen/text_view_title_bottom_margin"
                     android:layout_marginLeft="@dimen/source_image_left_margin"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:padding="@dimen/text_view_title_bottom_margin">
 
                     <ImageView
                         android:layout_width="@dimen/source_image_size"
@@ -254,7 +316,7 @@
                         android:background="@mipmap/map_icon_web" />
 
                     <TextView
-                        android:id="@+id/tv_source_web"
+                        android:id="@+id/tv_source_web_cell"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/source_image_left_margin"
@@ -264,6 +326,78 @@
                 </LinearLayout>
 
             </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:map="http://schemas.android.com/apk/res-auto"
+                    xmlns:tools="http://schemas.android.com/tools"
+                    android:id="@+id/map"
+                    android:name="com.google.android.gms.maps.SupportMapFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/sdv_image_hight"
+                    tools:context="com.example.tutorialspoint7.myapplication.MapsActivity" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:orientation="vertical"
+                    android:clickable="true"
+                    android:padding="15dp">
+
+                    <LinearLayout
+                        android:id="@+id/ll_share"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@color/appGreen"
+                            android:src="@mipmap/ikona_share" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@color/appGreen"
+                            android:gravity="left"
+                            android:icon="@mipmap/ikona_share"
+                            android:paddingLeft="5dp"
+                            android:textAppearance="@style/ContentAppearanceWhite"
+                            android:text="@string/share_content" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/ll_find_location"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:clickable="true"
+                        android:paddingTop="7dp">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@color/appGreen"
+                            android:src="@mipmap/pronadji_put" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@color/appGreen"
+                            android:paddingLeft="5dp"
+                            android:textAppearance="@style/ContentAppearanceWhite"
+                            android:text="@string/find_way_to_location" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </RelativeLayout>
 
         </LinearLayout>
 

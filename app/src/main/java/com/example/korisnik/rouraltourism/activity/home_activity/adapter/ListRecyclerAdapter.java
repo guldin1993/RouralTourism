@@ -31,8 +31,6 @@ public class ListRecyclerAdapter extends RecyclerView.Adapter<ListRecyclerAdapte
 
     private List<Location> locationList = new ArrayList<>();
     private RecyclerListener listener;
-    private Uri imageUri;
-    float ratings = 0f;
 
     @Override
     public Holder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -43,8 +41,9 @@ public class ListRecyclerAdapter extends RecyclerView.Adapter<ListRecyclerAdapte
     @Override
     public void onBindViewHolder(Holder holder, int position) {
 
+        float ratings = 0f;
         BasicLocationData basicData = locationList.get(position).getMeta().getBasic();
-        imageUri = Uri.parse(IMAGE_URL + locationList.get(position).getId());
+        Uri imageUri = Uri.parse(IMAGE_URL + locationList.get(position).getId());
         holder.locationImage.setImageURI(imageUri);
         ratings = locationList.get(position).getRatings();
         if (basicData.getWebLocation().equals("") || basicData.getWebLocation().isEmpty()) {
@@ -90,46 +89,38 @@ public class ListRecyclerAdapter extends RecyclerView.Adapter<ListRecyclerAdapte
     }
 
     private void setOneStar(Holder holder){
-        holder.ivStarOne.setImageResource(R.mipmap.subcategory_star_brawn);
-        holder.ivStarTwo.setImageResource(R.mipmap.subcategory_star_white_big);
-        holder.ivStarThree.setImageResource(R.mipmap.subcategory_star_white_big);
-        holder.ivStarFour.setImageResource(R.mipmap.subcategory_star_white_big);
-        holder.ivStarFive.setImageResource(R.mipmap.subcategory_star_white_big);
-    }
-
-    private void setTwoStars(Holder holder){
-        holder.ivStarOne.setImageResource(R.mipmap.subcategory_star_brawn);
-        holder.ivStarTwo.setImageResource(R.mipmap.subcategory_star_brawn);
-        holder.ivStarThree.setImageResource(R.mipmap.subcategory_star_white_big);
-        holder.ivStarFour.setImageResource(R.mipmap.subcategory_star_white_big);
-        holder.ivStarFive.setImageResource(R.mipmap.subcategory_star_white_big);
-    }
-
-    private void setThreeStars(Holder holder){
-        holder.ivStarOne.setImageResource(R.mipmap.subcategory_star_brawn);
-        holder.ivStarTwo.setImageResource(R.mipmap.subcategory_star_brawn);
-        holder.ivStarThree.setImageResource(R.mipmap.subcategory_star_brawn);
-        holder.ivStarFour.setImageResource(R.mipmap.subcategory_star_white_big);
-        holder.ivStarFive.setImageResource(R.mipmap.subcategory_star_white_big);
-    }
-
-    private void setFourStars(Holder holder){
-        holder.ivStarOne.setImageResource(R.mipmap.subcategory_star_brawn);
-        holder.ivStarTwo.setImageResource(R.mipmap.subcategory_star_brawn);
-        holder.ivStarThree.setImageResource(R.mipmap.subcategory_star_brawn);
-        holder.ivStarFour.setImageResource(R.mipmap.subcategory_star_brawn);
-        holder.ivStarFive.setImageResource(R.mipmap.subcategory_star_white_big);
-    }
-
-    private void setFiveStars(Holder holder){
-        holder.ivStarOne.setImageResource(R.mipmap.subcategory_star_brawn);
+        holder.ivStarOne.setImageResource(R.mipmap.subcategory_star_white_big);
         holder.ivStarTwo.setImageResource(R.mipmap.subcategory_star_brawn);
         holder.ivStarThree.setImageResource(R.mipmap.subcategory_star_brawn);
         holder.ivStarFour.setImageResource(R.mipmap.subcategory_star_brawn);
         holder.ivStarFive.setImageResource(R.mipmap.subcategory_star_brawn);
     }
 
-    private void setZeroStars(Holder holder){
+    private void setTwoStars(Holder holder){
+        holder.ivStarOne.setImageResource(R.mipmap.subcategory_star_white_big);
+        holder.ivStarTwo.setImageResource(R.mipmap.subcategory_star_white_big);
+        holder.ivStarThree.setImageResource(R.mipmap.subcategory_star_brawn);
+        holder.ivStarFour.setImageResource(R.mipmap.subcategory_star_brawn);
+        holder.ivStarFive.setImageResource(R.mipmap.subcategory_star_brawn);
+    }
+
+    private void setThreeStars(Holder holder){
+        holder.ivStarOne.setImageResource(R.mipmap.subcategory_star_white_big);
+        holder.ivStarTwo.setImageResource(R.mipmap.subcategory_star_white_big);
+        holder.ivStarThree.setImageResource(R.mipmap.subcategory_star_white_big);
+        holder.ivStarFour.setImageResource(R.mipmap.subcategory_star_brawn);
+        holder.ivStarFive.setImageResource(R.mipmap.subcategory_star_brawn);
+    }
+
+    private void setFourStars(Holder holder){
+        holder.ivStarOne.setImageResource(R.mipmap.subcategory_star_white_big);
+        holder.ivStarTwo.setImageResource(R.mipmap.subcategory_star_white_big);
+        holder.ivStarThree.setImageResource(R.mipmap.subcategory_star_white_big);
+        holder.ivStarFour.setImageResource(R.mipmap.subcategory_star_white_big);
+        holder.ivStarFive.setImageResource(R.mipmap.subcategory_star_brawn);
+    }
+
+    private void setFiveStars(Holder holder){
         holder.ivStarOne.setImageResource(R.mipmap.subcategory_star_white_big);
         holder.ivStarTwo.setImageResource(R.mipmap.subcategory_star_white_big);
         holder.ivStarThree.setImageResource(R.mipmap.subcategory_star_white_big);
@@ -137,18 +128,26 @@ public class ListRecyclerAdapter extends RecyclerView.Adapter<ListRecyclerAdapte
         holder.ivStarFive.setImageResource(R.mipmap.subcategory_star_white_big);
     }
 
+    private void setZeroStars(Holder holder){
+        holder.ivStarOne.setImageResource(R.mipmap.subcategory_star_brawn);
+        holder.ivStarTwo.setImageResource(R.mipmap.subcategory_star_brawn);
+        holder.ivStarThree.setImageResource(R.mipmap.subcategory_star_brawn);
+        holder.ivStarFour.setImageResource(R.mipmap.subcategory_star_brawn);
+        holder.ivStarFive.setImageResource(R.mipmap.subcategory_star_brawn);
+    }
+
     class Holder extends RecyclerView.ViewHolder implements View.OnClickListener{
-        @BindView(R.id.tv_address)
+        @BindView(R.id.tv_address_cell)
         TextView tvAddress;
-        @BindView(R.id.tv_city)
+        @BindView(R.id.tv_city_cell)
         TextView tvCity;
-        @BindView(R.id.tv_title)
+        @BindView(R.id.tv_title_cell)
         TextView tvTitle;
-        @BindView(R.id.tv_source_mail)
+        @BindView(R.id.tv_source_mail_cell)
         TextView tvSourceMail;
-        @BindView(R.id.tv_source_web)
+        @BindView(R.id.tv_source_web_cell)
         TextView tvSourceWeb;
-        @BindView(R.id.tv_source_telephone)
+        @BindView(R.id.tv_source_telephone_cell)
         TextView tvSoruceTelephone;
 
         /*@BindView(R.id.iv_location)
@@ -166,9 +165,9 @@ public class ListRecyclerAdapter extends RecyclerView.Adapter<ListRecyclerAdapte
 
         @BindView(R.id.ll_source_mail)
         LinearLayout llSoruceMail;
-        @BindView(R.id.ll_source_phone)
+        @BindView(R.id.ll_source_phone_cell)
         LinearLayout llSorucePhone;
-        @BindView(R.id.ll_web)
+        @BindView(R.id.ll_web_cell)
         LinearLayout llWeb;
 
         @BindView(R.id.sdvImage)

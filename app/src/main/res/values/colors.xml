@@ -7,5 +7,6 @@
     <color name="backgroundGrey">#dadcda</color>
     <color name="lighterGreyLine">#FF435843</color>
 
+    <color name="content_background_green">#d9fcd9</color>
     <color name="black_overlay">#66000000</color>
 </resources>

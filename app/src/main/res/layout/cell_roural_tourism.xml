@@ -46,7 +46,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_below="@+id/linearLayout"
+        android:layout_below="@+id/linearLayout_cell"
         android:src="@mipmap/events_arrow_right" />
 
     <LinearLayout
@@ -63,7 +63,7 @@
         android:paddingTop="5dp">
 
         <TextView
-            android:id="@+id/tv_title"
+            android:id="@+id/tv_title_cell"
             style="@style/TitleAppearance"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -75,29 +75,29 @@
             android:gravity="start" />
 
         <TextView
-            android:id="@+id/tv_address"
+            android:id="@+id/tv_address_cell"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/tv_title"
+            android:layout_below="@id/tv_title_cell"
             tools:text="Address"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:layout_marginBottom="@dimen/text_view_title_bottom_margin"
             android:gravity="start" />
 
         <TextView
-            android:id="@+id/tv_city"
+            android:id="@+id/tv_city_cell"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:text="City"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:layout_below="@+id/tv_address"
+            android:layout_below="@+id/tv_address_cell"
             android:layout_marginBottom="@dimen/text_view_title_bottom_margin"
             android:gravity="start" />
 
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/linearLayout"
+        android:id="@+id/linearLayout_cell"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/view_line"
@@ -119,40 +119,40 @@
             android:layout_width="@dimen/star_size"
             android:layout_height="@dimen/star_size"
             android:layout_gravity="center"
-            android:background="@mipmap/subcategory_star_white_big" />
+            android:background="@mipmap/subcategory_star_brawn" />
 
         <ImageView
             android:id="@+id/iv_star_two"
             android:layout_width="@dimen/star_size"
             android:layout_height="@dimen/star_size"
             android:layout_gravity="center"
-            android:background="@mipmap/subcategory_star_white_big" />
+            android:background="@mipmap/subcategory_star_brawn" />
 
         <ImageView
             android:id="@+id/iv_star_three"
             android:layout_width="@dimen/star_size"
             android:layout_height="@dimen/star_size"
             android:layout_gravity="center"
-            android:background="@mipmap/subcategory_star_white_big" />
+            android:background="@mipmap/subcategory_star_brawn" />
 
         <ImageView
             android:id="@+id/iv_star_four"
             android:layout_width="@dimen/star_size"
             android:layout_height="@dimen/star_size"
             android:layout_gravity="center"
-            android:background="@mipmap/subcategory_star_white_big" />
+            android:background="@mipmap/subcategory_star_brawn" />
 
         <ImageView
             android:id="@+id/iv_star_five"
             android:layout_width="@dimen/star_size"
             android:layout_height="@dimen/star_size"
             android:layout_gravity="center"
-            android:background="@mipmap/subcategory_star_white_big" />
+            android:background="@mipmap/subcategory_star_brawn" />
 
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/ll_source_phone"
+        android:id="@+id/ll_source_phone_cell"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignTop="@id/view_line"
@@ -167,7 +167,7 @@
             android:background="@mipmap/ico_phone" />
 
         <TextView
-            android:id="@+id/tv_source_telephone"
+            android:id="@+id/tv_source_telephone_cell"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
@@ -180,7 +180,7 @@
         android:id="@+id/ll_source_mail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/ll_source_phone"
+        android:layout_below="@id/ll_source_phone_cell"
         android:layout_marginBottom="@dimen/source_image_bottom_margin"
         android:layout_marginLeft="@dimen/source_image_left_margin"
         android:orientation="horizontal">
@@ -192,7 +192,7 @@
             android:background="@mipmap/map_icon_mail" />
 
         <TextView
-            android:id="@+id/tv_source_mail"
+            android:id="@+id/tv_source_mail_cell"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
@@ -202,7 +202,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/ll_web"
+        android:id="@+id/ll_web_cell"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/ll_source_mail"
@@ -217,7 +217,7 @@
             android:background="@mipmap/map_icon_web" />
 
         <TextView
-            android:id="@+id/tv_source_web"
+            android:id="@+id/tv_source_web_cell"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"

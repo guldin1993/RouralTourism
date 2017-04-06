@@ -5,4 +5,8 @@
     <string name="title_activity_image">ImageActivity</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="title_activity_maps">Map</string>
+
+    <string name="share_content">Share content</string>
+    <string name="find_way_to_location">Find your way to location</string>
 </resources>

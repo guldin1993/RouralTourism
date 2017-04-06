@@ -10,6 +10,7 @@ import com.example.korisnik.rouraltourism.model.interactors.listener.Listener;
 import com.example.korisnik.rouraltourism.utils.RestInterface;
 import com.example.korisnik.rouraltourism.utils.ServiceModule;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -37,23 +38,24 @@ public class InteractorImpl extends BaseInteractorImpl implements Interactor {
     }
 
     public void getZippedData(final Listener listener) {
-        addSubscription(Observable.zip(getLocation(), getRatigns(), new Func2<List<Location>, List<Ratings>, DataContainer>() {
+        addSubscription(Observable.zip(getLocation().defaultIfEmpty(new ArrayList<Location>()), getRatigns(), new Func2<List<Location>, List<Ratings>, DataContainer>() {
             @Override
             public DataContainer call(List<Location> locations, List<Ratings> ratings) {
                 List<Location> locationList = new ArrayList<>();
-                List<String>  locationIdList = new ArrayList<String>();
+                List<String> locationIdList = new ArrayList<String>();
                 List<Location> locationRatedList = new ArrayList<Location>();
 
                 for (Location location : locations) {
                     if (location.getSubtype().contains("10")) {
                         locationList.add(location);
                         locationIdList.add(location.getId());
-                        for (String id : locationIdList)
+                        for (String id : locationIdList) {
                             for (int i = 0; i < ratings.size(); i++) {
                                 if (id.equals(ratings.get(i).getId())) {
                                     location.setRatings(ratings.get(i).getRating());
                                 }
                             }
+                        }
                         locationRatedList.add(location);
                     }
                 }
@@ -79,17 +81,17 @@ public class InteractorImpl extends BaseInteractorImpl implements Interactor {
                 }));
     }
 
-    private Observable<List<Location>> getLocation(){
+    private Observable<List<Location>> getLocation() {
         return restInterface.readLocations();
     }
 
-    private Observable<List<Ratings>> getRatigns(){
+    private Observable<List<Ratings>> getRatigns() {
         return restInterface.readRatigns().flatMap(new Func1<Map<String, Float>, Observable<List<Ratings>>>() {
             @Override
             public Observable<List<Ratings>> call(Map<String, Float> stringFloatMap) {
                 List<String> keyList = new ArrayList<String>(stringFloatMap.keySet());
-                List<Ratings>  ratingResponseList = new ArrayList<Ratings>();
-                for(int i = 0; i<stringFloatMap.size(); i++){
+                List<Ratings> ratingResponseList = new ArrayList<Ratings>();
+                for (int i = 0; i < stringFloatMap.size(); i++) {
                     Ratings rating = new Ratings(keyList.get(i), stringFloatMap.get(keyList.get(i)));
                     ratingResponseList.add(rating);
                 }

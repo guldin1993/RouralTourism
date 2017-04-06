@@ -15,7 +15,7 @@
     <dimen name="star_size">10dp</dimen>
     <dimen name="text_view_title_bottom_margin">3dp</dimen>
 
-    <dimen name="sdv_image_hight">180dp</dimen>
+    <dimen name="sdv_image_hight">190dp</dimen>
     <dimen name="ico_image_left_margin">5dp</dimen>
     <dimen name="content_single_element_bottom_margin">9dp</dimen>
 </resources>

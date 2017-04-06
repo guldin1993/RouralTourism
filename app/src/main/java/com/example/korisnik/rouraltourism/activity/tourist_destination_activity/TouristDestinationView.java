@@ -10,4 +10,5 @@ public interface TouristDestinationView {
     void getSingleTextViews(List<String> strings);
     void getPictures(List<String> pictures);
     void getIcoImages(List<Boolean> icoList);
+    void getRatings(List<Boolean> ratings);
 }
