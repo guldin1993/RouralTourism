@@ -10,51 +10,52 @@
         android:id="@+id/iv_cover_image"
         android:layout_width="match_parent"
         android:layout_height="@dimen/sdv_image_hight"
-        android:paddingBottom="@dimen/content_single_element_bottom_margin"
-        android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:paddingBottom="@dimen/content_single_element_bottom_margin" />
 
     <TextView
         android:id="@+id/tv_share_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="@style/TitleSingleAppearance"
+        android:layout_below="@id/iv_cover_image"
         android:padding="@dimen/fab_margin"
-        tools:text="Title"
-        android:layout_below="@id/iv_cover_image"/>
+        android:textAppearance="@style/TitleSingleAppearance"
+        tools:text="Title" />
 
     <EditText
         android:id="@+id/et_share_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:layout_below="@id/tv_share_title" />
+        android:layout_below="@id/tv_share_title"
+        android:padding="10dp" />
 
     <LinearLayout
         android:id="@+id/ll_share_online"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/et_share_content"
+        android:layout_gravity="center_vertical"
+        android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:clickable="true"
-        android:padding="10dp"
-        android:layout_below="@id/et_share_content">
+        android:padding="10dp">
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@color/appGreen"
+            android:padding="5dp"
             android:src="@mipmap/ikona_share" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/appGreen"
-            android:gravity="left"
-            android:icon="@mipmap/ikona_share"
+            android:gravity="center_vertical"
             android:paddingLeft="5dp"
-            android:textAppearance="@style/ContentAppearanceWhite"
-            android:text="@string/share_content"/>
+            android:text="@string/share_content"
+            android:textAppearance="@style/ContentAppearanceWhite" />
     </LinearLayout>
 
 </RelativeLayout>

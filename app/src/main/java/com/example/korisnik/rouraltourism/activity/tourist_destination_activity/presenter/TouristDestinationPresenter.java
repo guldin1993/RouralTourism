@@ -5,6 +5,7 @@ import android.widget.LinearLayout;
 import com.example.korisnik.rouraltourism.model.data_model.Location;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.LatLng;
 
 import java.util.List;
 
@@ -16,7 +17,9 @@ public interface TouristDestinationPresenter {
     void initialize(Location location);
     String setCoverImage();
     String shareTitle();
-    String setLocation();
+    String setLocationUri();
+    Double setLocatinLat();
+    Double setLocatinLng();
     CameraPosition setCameraPoistion();
     String setLocaiton1Image();
     String setLocation2Image();

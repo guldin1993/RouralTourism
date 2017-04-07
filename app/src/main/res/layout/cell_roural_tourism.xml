@@ -112,6 +112,7 @@
         <ImageView
             android:layout_width="10dp"
             android:layout_height="wrap_content"
+            android:visibility="invisible"
             android:background="@mipmap/subcategory_stars_bg" />
 
         <ImageView
@@ -170,6 +171,7 @@
             android:id="@+id/tv_source_telephone_cell"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center_vertical"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             tools:text="Phone"
             android:layout_marginLeft="@dimen/source_image_left_margin" />
@@ -195,6 +197,7 @@
             android:id="@+id/tv_source_mail_cell"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center_vertical"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             tools:text="Mail"
             android:layout_marginLeft="@dimen/source_image_left_margin" />
@@ -220,6 +223,7 @@
             android:id="@+id/tv_source_web_cell"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center_vertical"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             tools:text="web"
             android:layout_marginLeft="@dimen/source_image_left_margin" />

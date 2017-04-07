@@ -18,7 +18,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class ShareActivity extends AppCompatActivity implements ShareView{
+public class ShareActivity extends AppCompatActivity implements ShareView {
 
     @BindView(R.id.iv_cover_image)
     SimpleDraweeView ivCoverImage;
@@ -40,7 +40,7 @@ public class ShareActivity extends AppCompatActivity implements ShareView{
     }
 
     @OnClick(R.id.ll_share_online)
-    public void onCoverPictureClick(){
+    public void onCoverPictureClick() {
         Intent shareIntent = new Intent(Intent.ACTION_SEND);
         shareIntent.setType("text/plain");
         shareIntent.putExtra(Intent.EXTRA_SUBJECT, "RouralTourism");

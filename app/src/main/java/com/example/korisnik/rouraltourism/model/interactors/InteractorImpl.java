@@ -41,19 +41,13 @@ public class InteractorImpl extends BaseInteractorImpl implements Interactor {
         addSubscription(Observable.zip(getLocation().defaultIfEmpty(new ArrayList<Location>()), getRatigns(), new Func2<List<Location>, List<Ratings>, DataContainer>() {
             @Override
             public DataContainer call(List<Location> locations, List<Ratings> ratings) {
-                List<Location> locationList = new ArrayList<>();
-                List<String> locationIdList = new ArrayList<String>();
                 List<Location> locationRatedList = new ArrayList<Location>();
 
                 for (Location location : locations) {
                     if (location.getSubtype().contains("10")) {
-                        locationList.add(location);
-                        locationIdList.add(location.getId());
-                        for (String id : locationIdList) {
-                            for (int i = 0; i < ratings.size(); i++) {
-                                if (id.equals(ratings.get(i).getId())) {
-                                    location.setRatings(ratings.get(i).getRating());
-                                }
+                        for (int i = 0; i < ratings.size(); i++) {
+                            if (location.getId().equals(ratings.get(i).getId())) {
+                                location.setRatings(ratings.get(i).getRating());
                             }
                         }
                         locationRatedList.add(location);

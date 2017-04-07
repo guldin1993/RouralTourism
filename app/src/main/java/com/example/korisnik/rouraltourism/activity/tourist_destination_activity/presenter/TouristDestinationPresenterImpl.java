@@ -45,9 +45,19 @@ public class TouristDestinationPresenterImpl implements TouristDestinationPresen
     }
 
     @Override
-    public String setLocation() {
+    public String setLocationUri() {
 
         return uri = String.format(Locale.ENGLISH, "geo:%f,%f", location.getMeta().getLoc().getLat(), location.getMeta().getLoc().getLng());
+    }
+
+    @Override
+    public Double setLocatinLat() {
+        return location.getMeta().getLoc().getLat();
+    }
+
+    @Override
+    public Double setLocatinLng() {
+        return location.getMeta().getLoc().getLng();
     }
 
     @Override
@@ -61,22 +71,22 @@ public class TouristDestinationPresenterImpl implements TouristDestinationPresen
 
     @Override
     public String setLocaiton1Image(){
-        return imageList.get(0);
-    }
-
-    @Override
-    public String setLocation2Image() {
         return imageList.get(1);
     }
 
     @Override
-    public String setLocation3Image() {
+    public String setLocation2Image() {
         return imageList.get(2);
     }
 
     @Override
-    public String setLocation4Image() {
+    public String setLocation3Image() {
         return imageList.get(3);
+    }
+
+    @Override
+    public String setLocation4Image() {
+        return imageList.get(4);
     }
 
     @Override

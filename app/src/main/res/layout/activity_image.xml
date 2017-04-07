@@ -2,39 +2,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#0099cc"
+    android:background="@color/lighter_black"
     tools:context="com.example.korisnik.rouraltourism.activity.image_actvity.ImageActivity">
 
-    <!-- The primary full-screen view. This can be replaced with whatever view
-         is needed to present your content, e.g. VideoView, SurfaceView,
-         TextureView, etc. -->
-
-    <!-- This FrameLayout insets its children based on system windows using
-         android:fitsSystemWindows. -->
-    <FrameLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fitsSystemWindows="true">
+        android:layout_height="300dp"
+        android:orientation="vertical"
+        android:layout_gravity="center_vertical"
+        android:scaleType="centerInside"
+        android:adjustViewBounds="true">
 
-        <LinearLayout
-            android:id="@+id/fullscreen_content_controls"
-            style="?metaButtonBarStyle"
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/dv_full_screen"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|center_horizontal"
-            android:background="@color/black_overlay"
-            android:orientation="horizontal"
-            tools:ignore="UselessParent">
+            android:layout_height="match_parent"
+            android:adjustViewBounds="true"
+            android:gravity="center"
+            android:scaleType="center" />
 
-            <com.facebook.drawee.view.SimpleDraweeView
-                android:id="@+id/dv_full_screen_image"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="fitXY"
-                android:gravity="center"
-                android:paddingBottom="@dimen/content_single_element_bottom_margin" />
-
-        </LinearLayout>
-    </FrameLayout>
-
+    </LinearLayout>
 </FrameLayout>
