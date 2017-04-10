@@ -43,24 +43,34 @@ public class ListRecyclerAdapter extends RecyclerView.Adapter<ListRecyclerAdapte
 
         float ratings = 0f;
         BasicLocationData basicData = locationList.get(position).getMeta().getBasic();
-        Uri imageUri = Uri.parse(IMAGE_URL + locationList.get(position).getId());
+        Uri imageUri = Uri.parse(IMAGE_URL + locationList.get(position).getImages().getImageZero());
         holder.locationImage.setImageURI(imageUri);
-        ratings = locationList.get(position).getRatings();
-        if (basicData.getWebLocation().equals("") || basicData.getWebLocation().isEmpty()) {
-            holder.setLlWeb(holder.llWeb);
-        }
-        if (basicData.getPhoneLocation().isEmpty() || basicData.getPhoneLocation().equals("")) {
-            holder.setLlSorucePhone(holder.llSorucePhone);
-        }
-        if (basicData.getMailLocation().equals("") || basicData.getMailLocation().isEmpty()) {
-            holder.setLlSoruceMail(holder.llSoruceMail);
-        }
+
         holder.tvTitle.setText(locationList.get(position).getTranslations().getTranslationOne().getTitle());
         holder.tvCity.setText(basicData.getCity());
         holder.tvAddress.setText(basicData.getAddress());
         holder.tvSoruceTelephone.setText(basicData.getPhoneLocation());
         holder.tvSourceMail.setText(basicData.getMailLocation());
         holder.tvSourceWeb.setText(basicData.getWebLocation());
+
+        if (basicData.getWebLocation().isEmpty()|| basicData.getWebLocation().equals("")) {
+            holder.llWeb.setVisibility(View.GONE);
+        }else {
+            holder.tvSourceWeb.setText(basicData.getWebLocation());
+            holder.llWeb.setVisibility(View.VISIBLE);
+        }
+        if (basicData.getPhoneLocation().isEmpty() || basicData.getPhoneLocation().equals("")) {
+            holder.llSorucePhone.setVisibility(View.GONE);
+        }else {
+            holder.llSorucePhone.setVisibility(View.VISIBLE);
+        }
+        if (basicData.getWebLocation().isEmpty() || basicData.getMailLocation().equals("")) {
+            holder.llSoruceMail.setVisibility(View.GONE);
+        }else {
+            holder.llSoruceMail.setVisibility(View.VISIBLE);
+        }
+
+        ratings = locationList.get(position).getRatings();
         if (ratings < 2f && ratings >= 1f) {
             setOneStar(holder);
         } else if (ratings < 3f && ratings >= 2f) {
@@ -173,20 +183,6 @@ public class ListRecyclerAdapter extends RecyclerView.Adapter<ListRecyclerAdapte
         @BindView(R.id.sdvImage)
         SimpleDraweeView locationImage;
 
-        private void setLlSorucePhone(LinearLayout llSorucePhone) {
-            llSorucePhone.setVisibility(View.GONE);
-            this.llSorucePhone = llSorucePhone;
-        }
-
-        private void setLlSoruceMail(LinearLayout llSoruceMail) {
-            llSoruceMail.setVisibility(View.GONE);
-            this.llSoruceMail = llSoruceMail;
-        }
-
-        private void setLlWeb(LinearLayout llWeb) {
-            llWeb.setVisibility(View.GONE);
-            this.llWeb = llWeb;
-        }
 
         public Holder(View itemView) {
             super(itemView);

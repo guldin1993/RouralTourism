@@ -7,5 +7,5 @@ package com.example.korisnik.rouraltourism.activity.share_activity;
 public interface ShareView {
     void getCoverImage(String baseUrl, String image);
     void getTitle(String title);
-    void getEdiTextText(String text);
+    void getEditTextText(String text);
 }

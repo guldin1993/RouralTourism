@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activity.home_activity.HomeActivity"
+    android:paddingTop="@dimen/view_holder_left_right_top_margin"
     android:background="@color/backgroundGrey">
 
     <android.support.v7.widget.RecyclerView

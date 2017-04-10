@@ -6,4 +6,6 @@ package com.example.korisnik.rouraltourism.activity.share_activity.presenter;
 
 public interface SharePresenter {
     void initialize(String image, String title);
+    String setTitle();
+    //Bitmap setImage(Context context, Bitmap bitmap, Uri uri);
 }

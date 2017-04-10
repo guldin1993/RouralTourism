@@ -36,7 +36,7 @@ public class TouristDestinationPresenterImpl implements TouristDestinationPresen
 
     @Override
     public String setCoverImage(){
-        return location.getId();
+        return location.getImages().getImageOne();
     }
 
     @Override
@@ -112,7 +112,6 @@ public class TouristDestinationPresenterImpl implements TouristDestinationPresen
         stringList.add(web);
         touristDestinationView.getSingleTextViews(stringList);
 
-        String cover = this.location.getId();
         String imageOne = this.location.getImages().getImageZero();
         String imageTwo = this.location.getImages().getImageOne();
         String imageThree = this.location.getImages().getImageTwo();
@@ -125,7 +124,6 @@ public class TouristDestinationPresenterImpl implements TouristDestinationPresen
         imageList.add(imageTwo);
         imageList.add(imageThree);
         imageList.add(imageFour);
-        imageList.add(cover);
         touristDestinationView.getPictures(imageList);
 
         Boolean flagOne = false;

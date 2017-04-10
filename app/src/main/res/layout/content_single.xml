@@ -17,7 +17,7 @@
         android:paddingTop="?attr/actionBarSize">
 
         <LinearLayout
-            android:id="@+id/linearLayout_cell"
+            android:id="@+id/ll_cell"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_above="@+id/view_line"
@@ -200,14 +200,14 @@
                     android:paddingRight="5dp"
                     fresco:placeholderImage="@mipmap/foto_bg" />
 
-                <com.facebook.drawee.view.SimpleDraweeView
+             <!--   <com.facebook.drawee.view.SimpleDraweeView
                     android:id="@+id/iv_location4"
                     android:layout_width="wrap_content"
                     android:layout_height="110dp"
                     android:layout_weight="1"
                     android:paddingLeft="5dp"
                     android:paddingRight="5dp"
-                    fresco:placeholderImage="@mipmap/foto_bg" />
+                    fresco:placeholderImage="@mipmap/foto_bg" />-->
                 <!--
                                 <ImageView
                                     android:id="@+id/iv_location1"
