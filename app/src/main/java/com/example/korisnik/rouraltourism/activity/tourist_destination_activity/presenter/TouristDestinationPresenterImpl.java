@@ -1,5 +1,8 @@
 package com.example.korisnik.rouraltourism.activity.tourist_destination_activity.presenter;
 
+import android.graphics.Bitmap;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.text.BoringLayout;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -11,6 +14,7 @@ import com.example.korisnik.rouraltourism.model.data_model.Location;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -28,6 +32,8 @@ public class TouristDestinationPresenterImpl implements TouristDestinationPresen
     private float ratings = 0f;
     private Location location;
     private String uri;
+    private Double latLoc;
+    private Double lngLoc;
 
     @Inject
     public TouristDestinationPresenterImpl(TouristDestinationView touristDestinationView) {
@@ -36,7 +42,7 @@ public class TouristDestinationPresenterImpl implements TouristDestinationPresen
 
     @Override
     public String setCoverImage(){
-        return location.getImages().getImageOne();
+        return location.getId();
     }
 
     @Override
@@ -47,7 +53,8 @@ public class TouristDestinationPresenterImpl implements TouristDestinationPresen
     @Override
     public String setLocationUri() {
 
-        return uri = String.format(Locale.ENGLISH, "geo:%f,%f", location.getMeta().getLoc().getLat(), location.getMeta().getLoc().getLng());
+        //return uri = String.format(Locale.ENGLISH, "geo:%f,%f", location.getMeta().getLoc().getLat(), location.getMeta().getLoc().getLng());
+        return uri = "http://maps.google.com/maps?f=d&hl=en&saddr="+latLoc+","+lngLoc+"&daddr="+location.getMeta().getLoc().getLat()+","+location.getMeta().getLoc().getLng();
     }
 
     @Override
@@ -71,22 +78,28 @@ public class TouristDestinationPresenterImpl implements TouristDestinationPresen
 
     @Override
     public String setLocaiton1Image(){
-        return imageList.get(1);
-    }
-
-    @Override
-    public String setLocation2Image() {
         return imageList.get(2);
     }
 
     @Override
-    public String setLocation3Image() {
+    public String setLocation2Image() {
         return imageList.get(3);
     }
 
     @Override
-    public String setLocation4Image() {
+    public String setLocation3Image() {
         return imageList.get(4);
+    }
+
+    @Override
+    public String setLocation4Image() {
+        return imageList.get(1);
+    }
+
+    @Override
+    public void setCurrentLocation(Double lat, Double lng) {
+        latLoc = lat;
+        lngLoc = lng;
     }
 
     @Override
@@ -181,5 +194,4 @@ public class TouristDestinationPresenterImpl implements TouristDestinationPresen
         flagStarList.add(starFlagFive);
         touristDestinationView.getRatings(flagStarList);
     }
-
 }

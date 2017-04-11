@@ -6,8 +6,10 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -20,7 +22,9 @@ import android.widget.Toast;
 import com.example.korisnik.rouraltourism.R;
 import com.example.korisnik.rouraltourism.activity.share_activity.presenter.SharePresenterImpl;
 import com.example.korisnik.rouraltourism.base.RouralTourismApplication;
+import com.facebook.drawee.view.SimpleDraweeView;
 
+import java.io.File;
 import java.io.IOException;
 
 import javax.inject.Inject;
@@ -34,16 +38,21 @@ public class ShareActivity extends AppCompatActivity implements ShareView {
     private static final int CAMERA_REQUEST = 1888;
 
     Uri imageUri;
+    Bitmap bitmap;
 
     @BindView(R.id.iv_cover_image)
-    ImageView ivCoverImage;
+    SimpleDraweeView ivCoverImage;
     @BindView(R.id.tv_share_title)
     TextView tvTitle;
     @BindView(R.id.et_share_content)
     EditText etShateContent;
+    @BindView(R.id.iv_take_photo)
+    ImageView ivTakePhoto;
 
     @Inject
     SharePresenterImpl presenter;
+
+    Boolean flagTakePhoto = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,9 +74,10 @@ public class ShareActivity extends AppCompatActivity implements ShareView {
         }
         Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
         startActivityForResult(cameraIntent, CAMERA_REQUEST);
+        flagTakePhoto = true;
     }
 
-    @Override
+   /* @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
         switch (requestCode) {
             case CAMERA_REQUEST: {
@@ -84,7 +94,7 @@ public class ShareActivity extends AppCompatActivity implements ShareView {
                 return;
             }
         }
-    }
+    }*/
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == CAMERA_REQUEST && resultCode == Activity.RESULT_OK) {
@@ -104,19 +114,30 @@ public class ShareActivity extends AppCompatActivity implements ShareView {
 
     @OnClick(R.id.ll_share_online)
     public void onCoverPictureClick() {
+
         Intent shareIntent = new Intent(Intent.ACTION_SEND);
         shareIntent.setType("text/plain");
         shareIntent.putExtra(Intent.EXTRA_SUBJECT, "RouralTourism");
         //shareIntent.putExtra(Intent.EXTRA_TEXT, "share this");
-        shareIntent.putExtra(Intent.EXTRA_STREAM, imageUri);
+        if (flagTakePhoto)
+            shareIntent.putExtra(Intent.EXTRA_STREAM, imageUri);
+        else {
+            shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            shareIntent.putExtra(Intent.EXTRA_STREAM, presenter.getImageUri(this, presenter.getBitmapFromView(ivCoverImage)));
+        }
         startActivity(Intent.createChooser(shareIntent, "Share via"));
     }
 
     @Override
     public void getCoverImage(String baseUrl, String image) {
-        Uri uri;
-        uri = Uri.parse(baseUrl + image);
-        ivCoverImage.setImageURI(uri);
+        imageUri = Uri.parse(baseUrl + image);
+        ivCoverImage.setImageURI(imageUri);
+
+        try {
+            bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

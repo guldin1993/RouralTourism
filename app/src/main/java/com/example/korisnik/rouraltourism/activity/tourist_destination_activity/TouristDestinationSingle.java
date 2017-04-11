@@ -1,10 +1,24 @@
 package com.example.korisnik.rouraltourism.activity.tourist_destination_activity;
 
+import android.Manifest;
+import android.content.ContentResolver;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.provider.Settings;
+import android.support.annotation.MainThread;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
@@ -17,6 +31,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.korisnik.rouraltourism.R;
 
@@ -26,8 +41,13 @@ import com.example.korisnik.rouraltourism.activity.tourist_destination_activity.
 import com.example.korisnik.rouraltourism.base.RouralTourismApplication;
 import com.example.korisnik.rouraltourism.model.data_model.Location;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.LocationSource;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
@@ -35,6 +55,7 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.io.IOException;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -43,7 +64,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class TouristDestinationSingle extends AppCompatActivity implements TouristDestinationView, OnMapReadyCallback {
+public class TouristDestinationSingle extends AppCompatActivity implements TouristDestinationView, OnMapReadyCallback, LocationListener {
 
     @BindView(R.id.iv_cover_image)
     SimpleDraweeView ivCoverImage;
@@ -103,15 +124,14 @@ public class TouristDestinationSingle extends AppCompatActivity implements Touri
     @BindView(R.id.rl_fragment_container)
     RelativeLayout relativeLayout;
     /*@BindView(R.id.map)
-    SupportMapFragment mapFragment;*/
+    MapView mapView;*/
     @BindView(R.id.ll_find_location_lat_lng)
     LinearLayout llFindLocation;
+    @BindView(R.id.ll_share)
+    LinearLayout llShare;
 
     @BindView(R.id.sv_single)
     ScrollView scrollView;
-
-    @BindView(R.id.ll_share)
-    LinearLayout llShare;
 
     @BindView(R.id.btn_expand)
     Button expandColapseButton;
@@ -122,6 +142,8 @@ public class TouristDestinationSingle extends AppCompatActivity implements Touri
     GoogleMap mMap;
 
     Boolean expandFlag = false;
+
+    private GoogleApiClient mGoogleApiClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -144,6 +166,22 @@ public class TouristDestinationSingle extends AppCompatActivity implements Touri
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         setTitle(presenter.shareTitle());
+
+        if (mGoogleApiClient == null) {
+            mGoogleApiClient = new GoogleApiClient.Builder(this)
+                    .addApi(LocationServices.API)
+                    .build();
+        }
+    }
+
+    protected void onStart() {
+        mGoogleApiClient.connect();
+        super.onStart();
+    }
+
+    protected void onStop() {
+        mGoogleApiClient.disconnect();
+        super.onStop();
     }
 
     private void callMap() {
@@ -159,8 +197,7 @@ public class TouristDestinationSingle extends AppCompatActivity implements Touri
                 this.getResources().getDisplayMetrics() ) , Resources.getSystem().getDisplayMetrics().widthPixels, Resources.getSystem().getDisplayMetrics().heightPixels );*//*
         llShare.setVisibility(View.INVISIBLE);
         llFindLocation.setVisibility(View.INVISIBLE);
-        relativeLayout.bringToFront();
-        callMap();*/
+        relativeLayout.bringToFront();*/
 
         if (!expandFlag) {
             RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(Resources.getSystem().getDisplayMetrics().widthPixels, Resources.getSystem().getDisplayMetrics().heightPixels);
@@ -179,13 +216,12 @@ public class TouristDestinationSingle extends AppCompatActivity implements Touri
             expandFlag = false;
             expandColapseButton.setBackgroundResource(R.mipmap.otvori);
         }
-
     }
 
     @OnClick(R.id.iv_cover_image)
     public void onCoverPictureClick() {
         Intent i = new Intent(this, ImageActivity.class);
-        i.putExtra("TO_IMAGE_ACTIVITY", presenter.setCoverImage());
+        i.putExtra("TO_IMAGE_ACTIVITY", presenter.setLocation4Image());
         i.putExtra("TO_IMAGE_ACTIVITY_TITLE", presenter.shareTitle());
         startActivity(i);
     }
@@ -214,28 +250,68 @@ public class TouristDestinationSingle extends AppCompatActivity implements Touri
         startActivity(i);
     }
 
-   /* @OnClick(R.id.iv_location4)
-    public void onLocation4PictureClick() {
-        Intent i = new Intent(this, ImageActivity.class);
-        i.putExtra("TO_IMAGE_ACTIVITY", presenter.setLocation4Image());
-        i.putExtra("TO_IMAGE_ACTIVITY_TITLE", presenter.shareTitle());
-        startActivity(i);
-    }*/
-
     @OnClick(R.id.ll_share)
     public void onShareClick() {
         Intent i = new Intent(this, ShareActivity.class);
-        i.putExtra("TO_SHARE_ACTIVITY_IMAGE", presenter.setCoverImage());
+        i.putExtra("TO_SHARE_ACTIVITY_IMAGE", presenter.setLocaiton1Image());
         i.putExtra("TO_IMAGE_ACTIVITY_TITLE", presenter.shareTitle());
         startActivity(i);
     }
 
     @OnClick(R.id.ll_find_location_lat_lng)
     public void onLocationFindClick() {
-        Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(presenter.setLocationUri()));
-        //try to send camera positon if you find it
-        this.startActivity(i);
-    }
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        final String action = Settings.ACTION_LOCATION_SOURCE_SETTINGS;
+        final String message = "This action acquire your location data, you need to turn on you gps to proceed?";
+
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            builder.setMessage(message)
+                    .setPositiveButton("OK",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface d, int id) {
+                                    startActivity(new Intent(action));
+                                    d.dismiss();
+                                }
+                            })
+                    .setNegativeButton("Cancel",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface d, int id) {
+                                    d.cancel();
+                                }
+                            });
+            builder.create().show();
+        } else {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 10);
+        }
+            android.location.Location mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+            if (mLastLocation != null) {
+                presenter.setCurrentLocation(mLastLocation.getLatitude(), (mLastLocation.getLongitude()));
+            }
+            Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(presenter.setLocationUri()));
+            this.startActivity(i);
+        }
+        /*if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+
+        } else {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, 11);
+        }*/
+
+   /* @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case 10: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(presenter.setLocationUri()));
+                    this.startActivity(i);
+
+                } else {
+
+                }
+
+            }
+        }
+    }*/
 
     @Override
     public void getSingleTextViews(List<String> strings) {
@@ -312,6 +388,10 @@ public class TouristDestinationSingle extends AppCompatActivity implements Touri
         linearLayoutStars.bringToFront();
     }
 
+    public ContentResolver contentResolver() {
+        return this.getContentResolver();
+    }
+
     @Override
     public void getPictures(List<String> pictures) {
         Uri uri;
@@ -328,8 +408,6 @@ public class TouristDestinationSingle extends AppCompatActivity implements Touri
                     ivLocation2.setImageURI(uri);
                 if (i == 4)
                     ivLocation3.setImageURI(uri);
-
-                /*if (i == 1 && (pictures.get(i).isEmpty() || pictures.get(i) == null || pictures.get(i).equals("")))*/
 
                 if (i == 2 && (pictures.get(i).isEmpty() || pictures.get(i) == null || pictures.get(i).equals("")))
                     ivLocation1.setVisibility(View.GONE);
@@ -364,6 +442,16 @@ public class TouristDestinationSingle extends AppCompatActivity implements Touri
         mMap.moveCamera(CameraUpdateFactory.newLatLng(myLocation));
         CameraPosition cameraPosition = new CameraPosition.Builder().target(myLocation).zoom(12).build();
         mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+    }
 
+
+    @Override
+    public void onLocationChanged(android.location.Location location) {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            android.location.Location mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+            if (mLastLocation != null) {
+                presenter.setCurrentLocation(mLastLocation.getLatitude(), (mLastLocation.getLongitude()));
+            }
+        }
     }
 }

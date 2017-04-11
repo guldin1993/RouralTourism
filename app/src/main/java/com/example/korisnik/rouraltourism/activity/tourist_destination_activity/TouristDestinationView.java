@@ -1,5 +1,8 @@
 package com.example.korisnik.rouraltourism.activity.tourist_destination_activity;
 
+import android.content.ContentResolver;
+
+import java.io.IOException;
 import java.util.List;
 
 /**
