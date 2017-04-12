@@ -11,6 +11,7 @@ import android.view.View;
 
 import com.example.korisnik.rouraltourism.activity.home_activity.adapter.ListRecyclerAdapter;
 import com.example.korisnik.rouraltourism.activity.share_activity.ShareView;
+import com.example.korisnik.rouraltourism.base.RouralTourismApplication;
 
 import java.io.ByteArrayOutputStream;
 
@@ -40,7 +41,7 @@ public class SharePresenterImpl implements SharePresenter {
 
         editText = "Posjetite " + title + " #RouralTourism";
 
-        shareView.getCoverImage(ListRecyclerAdapter.IMAGE_URL, this.image);
+        shareView.getCoverImage(RouralTourismApplication.IMAGE_URL, this.image);
         shareView.getTitle(this.title);
         shareView.getEditTextText(editText);
     }

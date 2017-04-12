@@ -8,69 +8,68 @@
     android:layout_height="match_parent"
     android:background="@color/backgroundGrey"
     android:fillViewport="true"
-    tools:context=".activity.tourist_destination_activity.TouristDestinationSingle"
+    tools:context=".activity.tourist_destination_activity.TouristDestinationSingleActivity"
     tools:showIn="@layout/activity_single">
 
-    <RelativeLayout xmlns:tools="http://schemas.android.com/tools"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="?attr/actionBarSize">
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:id="@+id/ll_cell"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/view_line"
+            android:layout_above="@id/view_line"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_marginTop="150dp"
+            android:layout_marginTop="@dimen/ll_stars_holder"
             android:layout_toLeftOf="@id/linear_text_view_holder"
             android:layout_toStartOf="@id/linear_text_view_holder"
             android:background="@mipmap/subcategory_stars_bg"
-            android:gravity="top"
             android:orientation="horizontal"
-            android:paddingBottom="10dp"
+            android:gravity="center"
+            android:padding="@dimen/ll_stars_holder_padding"
             android:visibility="visible">
-
-            <ImageView
-                android:layout_width="10dp"
-                android:layout_height="wrap_content"
-                android:background="@mipmap/subcategory_stars_bg"
-                android:visibility="invisible" />
 
             <ImageView
                 android:id="@+id/iv_star_one"
                 android:layout_width="@dimen/star_size"
+                android:layout_marginLeft="@dimen/star_size"
                 android:layout_height="@dimen/star_size"
-                android:layout_gravity="bottom"
+                android:layout_gravity="center"
+                android:layout_marginRight="@dimen/star_right_margin"
                 android:background="@mipmap/subcategory_star_brawn" />
 
             <ImageView
                 android:id="@+id/iv_star_two"
                 android:layout_width="@dimen/star_size"
                 android:layout_height="@dimen/star_size"
-                android:layout_gravity="bottom"
+                android:layout_gravity="center"
+                android:layout_marginRight="@dimen/star_right_margin"
                 android:background="@mipmap/subcategory_star_brawn" />
 
             <ImageView
                 android:id="@+id/iv_star_three"
                 android:layout_width="@dimen/star_size"
                 android:layout_height="@dimen/star_size"
-                android:layout_gravity="bottom"
+                android:layout_gravity="center"
+                android:layout_marginRight="@dimen/star_right_margin"
                 android:background="@mipmap/subcategory_star_brawn" />
 
             <ImageView
                 android:id="@+id/iv_star_four"
                 android:layout_width="@dimen/star_size"
                 android:layout_height="@dimen/star_size"
-                android:layout_gravity="bottom"
+                android:layout_marginRight="@dimen/star_right_margin"
+                android:layout_gravity="center"
                 android:background="@mipmap/subcategory_star_brawn" />
 
             <ImageView
                 android:id="@+id/iv_star_five"
                 android:layout_width="@dimen/star_size"
                 android:layout_height="@dimen/star_size"
-                android:layout_gravity="bottom"
+                android:layout_marginRight="@dimen/star_right_margin"
+                android:layout_gravity="center"
                 android:background="@mipmap/subcategory_star_brawn" />
 
         </LinearLayout>
@@ -82,18 +81,9 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-
+            fresco:actualImageScaleType="fitXY"
             android:paddingBottom="@dimen/content_single_element_bottom_margin"
             fresco:placeholderImage="@mipmap/foto_bg" />
-
-        <!--  <ImageView
-              android:id="@+id/iv_cover_image"
-              android:layout_width="match_parent"
-              android:layout_height="@dimen/sdv_image_hight"
-              android:layout_alignParentLeft="true"
-              android:layout_alignParentStart="true"
-              android:layout_alignParentTop="true"
-              android:layout_marginBottom="@dimen/content_single_element_bottom_margin" />-->
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -127,31 +117,31 @@
 
                 <ImageView
                     android:id="@+id/iv_ico_sleeping"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/service_image_size"
+                    android:layout_height="@dimen/service_image_size"
                     android:layout_marginLeft="@dimen/ico_image_left_margin"
                     android:background="@mipmap/ico_spavanje" />
 
                 <ImageView
                     android:id="@+id/iv_ico_food"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/service_image_size"
+                    android:layout_height="@dimen/service_image_size"
                     android:layout_alignLeft="@id/iv_ico_sleeping"
                     android:layout_marginLeft="@dimen/ico_image_left_margin"
                     android:background="@mipmap/ico_hrana" />
 
                 <ImageView
                     android:id="@+id/iv_ico_coffe"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/service_image_size"
+                    android:layout_height="@dimen/service_image_size"
                     android:layout_alignLeft="@id/iv_ico_coffe"
                     android:layout_marginLeft="@dimen/ico_image_left_margin"
                     android:background="@mipmap/ico_kava" />
 
                 <ImageView
                     android:id="@+id/iv_ico_recreation"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/service_image_size"
+                    android:layout_height="@dimen/service_image_size"
                     android:layout_marginLeft="@dimen/ico_image_left_margin"
                     android:background="@mipmap/ico_rekreacija" />
 
@@ -171,15 +161,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:padding="@dimen/text_view_title_bottom_margin">
+                android:paddingLeft="@dimen/location_image_one_two_lr_margin"
+                android:paddingRight="@dimen/location_image_one_two_lr_margin"
+                android:paddingBottom="@dimen/text_view_title_bottom_margin"
+                android:paddingTop="@dimen/text_view_title_bottom_margin">
 
                 <com.facebook.drawee.view.SimpleDraweeView
                     android:id="@+id/iv_location1"
                     android:layout_width="wrap_content"
                     android:layout_height="110dp"
                     android:layout_weight="1"
-                    android:paddingLeft="5dp"
-                    android:paddingRight="5dp"
+                    android:layout_marginLeft="@dimen/location_image_one_two_lr_margin"
+                    android:layout_marginRight="@dimen/location_image_one_two_lr_margin"
+                    fresco:actualImageScaleType="fitCenter"
                     fresco:placeholderImage="@mipmap/foto_bg" />
 
                 <com.facebook.drawee.view.SimpleDraweeView
@@ -187,8 +181,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="110dp"
                     android:layout_weight="1"
-                    android:paddingLeft="5dp"
-                    android:paddingRight="5dp"
+                    android:layout_marginLeft="@dimen/location_image_one_two_lr_margin"
+                    android:layout_marginRight="@dimen/location_image_one_two_lr_margin"
+                    fresco:actualImageScaleType="fitCenter"
                     fresco:placeholderImage="@mipmap/foto_bg" />
 
                 <com.facebook.drawee.view.SimpleDraweeView
@@ -196,42 +191,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="110dp"
                     android:layout_weight="1"
-                    android:paddingLeft="5dp"
-                    android:paddingRight="5dp"
+                    android:layout_marginLeft="@dimen/location_image_one_two_lr_margin"
+                    android:layout_marginRight="@dimen/location_image_one_two_lr_margin"
+                    fresco:actualImageScaleType="fitCenter"
                     fresco:placeholderImage="@mipmap/foto_bg" />
-
-             <!--   <com.facebook.drawee.view.SimpleDraweeView
-                    android:id="@+id/iv_location4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="110dp"
-                    android:layout_weight="1"
-                    android:paddingLeft="5dp"
-                    android:paddingRight="5dp"
-                    fresco:placeholderImage="@mipmap/foto_bg" />-->
-                <!--
-                                <ImageView
-                                    android:id="@+id/iv_location1"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1" />
-
-                                <ImageView
-                                    android:id="@+id/iv_location2"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1" />
-
-                                <ImageView
-                                    android:id="@+id/iv_location3"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1" />
-
-                                <ImageView
-                                    android:id="@+id/iv_location4"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1" />-->
 
             </LinearLayout>
 
@@ -247,7 +210,8 @@
                     android:layout_height="wrap_content"
                     android:background="@color/appGreen"
                     android:gravity="center_vertical"
-                    android:padding="@dimen/text_view_title_bottom_margin"
+                    android:paddingTop="@dimen/address_padding"
+                    android:layout_marginLeft="@dimen/left_right_bottom_margin_elements"
                     android:textAppearance="@style/ContentAppearanceWhite"
                     tools:text="Address" />
 
@@ -256,7 +220,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
-                    android:padding="@dimen/text_view_title_bottom_margin"
+                    android:layout_marginLeft="@dimen/left_right_bottom_margin_elements"
+                    android:paddingTop="@dimen/address_padding"
+                    android:paddingBottom="@dimen/address_padding"
                     android:textAppearance="@style/ContentAppearanceWhite"
                     tools:text="Citiy" />
 
@@ -269,10 +235,9 @@
                     android:id="@+id/ll_source_phone_cell"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/source_image_left_margin"
+                    android:layout_marginLeft="@dimen/left_right_bottom_margin_elements"
                     android:orientation="horizontal"
-
-                    android:padding="@dimen/text_view_title_bottom_margin">
+                    android:paddingTop="@dimen/address_padding">
 
                     <ImageView
                         android:layout_width="@dimen/source_image_size"
@@ -296,9 +261,9 @@
                     android:id="@+id/ll_source_mail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/source_image_left_margin"
+                    android:layout_marginLeft="@dimen/left_right_bottom_margin_elements"
                     android:orientation="horizontal"
-                    android:padding="@dimen/text_view_title_bottom_margin">
+                    android:paddingTop="@dimen/address_padding">
 
                     <ImageView
                         android:layout_width="@dimen/source_image_size"
@@ -322,9 +287,10 @@
                     android:id="@+id/ll_web_cell"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/source_image_left_margin"
+                    android:layout_marginLeft="@dimen/left_right_bottom_margin_elements"
                     android:orientation="horizontal"
-                    android:padding="@dimen/text_view_title_bottom_margin">
+                    android:paddingTop="@dimen/address_padding"
+                    android:paddingBottom="@dimen/address_padding">
 
                     <ImageView
                         android:layout_width="@dimen/source_image_size"
@@ -376,46 +342,46 @@
                     android:clickable="true"
                     android:gravity="center_vertical"
                     android:orientation="vertical"
-                    android:padding="15dp">
+                    android:padding="@dimen/left_right_bottom_margin_elements">
 
                     <LinearLayout
                         android:id="@+id/ll_share"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:background="@color/appGreen"
                         android:layout_gravity="center_vertical"
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
-                        android:padding="5dp">
+                        android:padding="@dimen/button_share_padding">
 
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:background="@color/appGreen"
-                            android:padding="5dp"
-                            android:layout_gravity="center_vertical"
+                            android:padding="@dimen/button_share_padding"
                             android:src="@mipmap/ikona_share" />
 
                         <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:background="@color/appGreen"
                             android:gravity="center_vertical"
-                            android:icon="@mipmap/ikona_share"
-                            android:paddingLeft="5dp"
+                            android:paddingLeft="@dimen/button_share_padding"
                             android:text="@string/share_content"
-                            android:textAppearance="@style/ContentAppearanceWhite" />
+                            android:textAppearance="@style/ContentAppearanceWhiteButtons" />
                     </LinearLayout>
 
                     <LinearLayout
                         android:id="@+id/ll_find_location_lat_lng"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
                         android:layout_gravity="center_vertical"
+                        android:background="@color/appGreen"
                         android:clickable="true"
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
-                        android:padding="5dp"
-                        android:paddingTop="7dp">
+                        android:padding="@dimen/button_share_padding">
 
                         <ImageView
                             android:layout_width="wrap_content"
@@ -425,14 +391,14 @@
                             android:src="@mipmap/pronadji_put" />
 
                         <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:background="@color/appGreen"
                             android:foregroundGravity="center_vertical"
                             android:gravity="center_vertical"
-                            android:paddingLeft="5dp"
+                            android:paddingLeft="@dimen/button_share_padding"
                             android:text="@string/find_way_to_location"
-                            android:textAppearance="@style/ContentAppearanceWhite" />
+                            android:textAppearance="@style/ContentAppearanceWhiteButtons" />
 
                     </LinearLayout>
 

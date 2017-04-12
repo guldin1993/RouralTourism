@@ -8,9 +8,8 @@ import android.support.v7.widget.RecyclerView;
 
 import com.example.korisnik.rouraltourism.R;
 import com.example.korisnik.rouraltourism.activity.home_activity.adapter.ListRecyclerAdapter;
-import com.example.korisnik.rouraltourism.activity.home_activity.adapter.RecyclerListener;
 import com.example.korisnik.rouraltourism.activity.home_activity.presenter.HomePresenter;
-import com.example.korisnik.rouraltourism.activity.tourist_destination_activity.TouristDestinationSingle;
+import com.example.korisnik.rouraltourism.activity.tourist_destination_activity.TouristDestinationSingleActivity;
 import com.example.korisnik.rouraltourism.base.RouralTourismApplication;
 import com.example.korisnik.rouraltourism.model.data_model.Location;
 
@@ -21,7 +20,9 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class HomeActivity extends AppCompatActivity implements HomeView, RecyclerListener {
+public class HomeActivity extends AppCompatActivity implements HomeView, ListRecyclerAdapter.RecyclerListener {
+    public static final String EXTRA_TO_TOURIST_DESTINATION_SINGLE = "location";
+
     @BindView(R.id.my_recycler_view)
     RecyclerView recyclerView;
 
@@ -39,29 +40,36 @@ public class HomeActivity extends AppCompatActivity implements HomeView, Recycle
         RouralTourismApplication.get(this).getAppComponent()
                 .plus(new HomeModule(this))
                 .inject(this);
-        presenter.allLocations();
+
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setHasFixedSize(true);
         adapter.setListener(this);
         recyclerView.setAdapter(adapter);
+        getSupportActionBar().setIcon((R.mipmap.ic_launcher));
     }
 
     @Override
-    protected void onStop(){
+    protected void onStart() {
+        super.onStart();
+        presenter.getAllLocations();
+    }
+
+    @Override
+    protected void onStop() {
         super.onStop();
         presenter.stopCall();
     }
 
     @Override
     public void onLocations(List<Location> locationList) {
-        if(adapter != null)
+        if (adapter != null)
             adapter.setLocationData(locationList);
     }
 
     @Override
     public void onRecyclerClick(Location location) {
-        Intent i = new Intent(this, TouristDestinationSingle.class);
-        i.putExtra("TO_TOURIST_DESTINATION_SINGLE", location);
+        Intent i = new Intent(this, TouristDestinationSingleActivity.class);
+        i.putExtra(EXTRA_TO_TOURIST_DESTINATION_SINGLE, location);
         startActivity(i);
     }
 }

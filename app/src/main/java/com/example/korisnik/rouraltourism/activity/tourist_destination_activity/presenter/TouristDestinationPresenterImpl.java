@@ -1,23 +1,17 @@
 package com.example.korisnik.rouraltourism.activity.tourist_destination_activity.presenter;
 
-import android.graphics.Bitmap;
-import android.net.Uri;
-import android.provider.MediaStore;
-import android.text.BoringLayout;
 import android.view.View;
-import android.widget.LinearLayout;
 
-import com.example.korisnik.rouraltourism.activity.home_activity.adapter.ListRecyclerAdapter;
+import com.example.korisnik.rouraltourism.R;
 import com.example.korisnik.rouraltourism.activity.tourist_destination_activity.TouristDestinationView;
+import com.example.korisnik.rouraltourism.base.RouralTourismApplication;
 import com.example.korisnik.rouraltourism.model.data_model.BasicLocationData;
 import com.example.korisnik.rouraltourism.model.data_model.Location;
-import com.google.android.gms.maps.model.CameraPosition;
-import com.google.android.gms.maps.model.LatLng;
+import com.example.korisnik.rouraltourism.model.data_model.ServiceImagesSingle;
+import com.example.korisnik.rouraltourism.model.data_model.TextInformationsSIngle;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 import javax.inject.Inject;
 
@@ -28,12 +22,15 @@ import javax.inject.Inject;
 public class TouristDestinationPresenterImpl implements TouristDestinationPresenter {
 
     private TouristDestinationView touristDestinationView;
+    private TextInformationsSIngle textInformationsSIngle = new TextInformationsSIngle();
+    private ServiceImagesSingle serviceImagesSingle;
     private List<String> imageList = new ArrayList<>();
     private float ratings = 0f;
     private Location location;
     private String uri;
     private Double latLoc;
     private Double lngLoc;
+    private String title;
 
     @Inject
     public TouristDestinationPresenterImpl(TouristDestinationView touristDestinationView) {
@@ -41,103 +38,33 @@ public class TouristDestinationPresenterImpl implements TouristDestinationPresen
     }
 
     @Override
-    public String setCoverImage(){
-        return location.getId();
-    }
-
-    @Override
-    public String shareTitle() {
-        return location.getTranslations().getTranslationOne().getTitle();
-    }
-
-    @Override
-    public String setLocationUri() {
-
-        //return uri = String.format(Locale.ENGLISH, "geo:%f,%f", location.getMeta().getLoc().getLat(), location.getMeta().getLoc().getLng());
-        return uri = "http://maps.google.com/maps?f=d&hl=en&saddr="+latLoc+","+lngLoc+"&daddr="+location.getMeta().getLoc().getLat()+","+location.getMeta().getLoc().getLng();
-    }
-
-    @Override
-    public Double setLocatinLat() {
-        return location.getMeta().getLoc().getLat();
-    }
-
-    @Override
-    public Double setLocatinLng() {
-        return location.getMeta().getLoc().getLng();
-    }
-
-    @Override
-    public CameraPosition setCameraPoistion() {
-        CameraPosition cameraPosition = new CameraPosition.Builder()
-                .target(new LatLng(location.getMeta().getLoc().getLat(),  location.getMeta().getLoc().getLng()))
-                .zoom(11)
-                .build();
-        return cameraPosition;
-    }
-
-    @Override
-    public String setLocaiton1Image(){
-        return imageList.get(2);
-    }
-
-    @Override
-    public String setLocation2Image() {
-        return imageList.get(3);
-    }
-
-    @Override
-    public String setLocation3Image() {
-        return imageList.get(4);
-    }
-
-    @Override
-    public String setLocation4Image() {
-        return imageList.get(1);
-    }
-
-    @Override
-    public void setCurrentLocation(Double lat, Double lng) {
-        latLoc = lat;
-        lngLoc = lng;
-    }
-
-    @Override
     public void initialize(Location location) {
         this.location = location;
         BasicLocationData basicData = this.location.getMeta().getBasic();
+        title = location.getTranslations().getTranslationOne().getTitle();
 
-        String title = this.location.getTranslations().getTranslationOne().getTitle();
-        String content = this.location.getTranslations().getTranslationOne().getContent();
-        String address = basicData.getAddress();
-        String city = basicData.getCity();
-        String phone = basicData.getPhoneLocation();
-        String mail = basicData.getMailLocation();
-        String web = basicData.getWebLocation();
-
-        List<String> stringList = new ArrayList<>();
-        stringList.add(title);
-        stringList.add(content);
-        stringList.add(address);
-        stringList.add(city);
-        stringList.add(phone);
-        stringList.add(mail);
-        stringList.add(web);
-        touristDestinationView.getSingleTextViews(stringList);
+        textInformationsSIngle.setTitle(this.location.getTranslations().getTranslationOne().getTitle());
+        textInformationsSIngle.setContent(this.location.getTranslations().getTranslationOne().getContent());
+        textInformationsSIngle.setAddress(basicData.getAddress());
+        textInformationsSIngle.setCity(basicData.getCity());
+        textInformationsSIngle.setPhone(basicData.getPhoneLocation());
+        textInformationsSIngle.setMail(basicData.getMailLocation());
+        textInformationsSIngle.setWeb(basicData.getWebLocation());
+        touristDestinationView.showTextViews(textInformationsSIngle);
 
         String imageOne = this.location.getImages().getImageZero();
         String imageTwo = this.location.getImages().getImageOne();
         String imageThree = this.location.getImages().getImageTwo();
         String imageFour = this.location.getImages().getImageThree();
 
-        String url = ListRecyclerAdapter.IMAGE_URL;
+        String url = RouralTourismApplication.IMAGE_URL;
 
         imageList.add(url);
         imageList.add(imageOne);
         imageList.add(imageTwo);
         imageList.add(imageThree);
         imageList.add(imageFour);
-        touristDestinationView.getPictures(imageList);
+        touristDestinationView.showLocationImages(imageList);
 
         Boolean flagOne = false;
         Boolean flagTwo = false;
@@ -162,7 +89,7 @@ public class TouristDestinationPresenterImpl implements TouristDestinationPresen
         flagList.add(flagTwo);
         flagList.add(flagThree);
         flagList.add(flagFour);
-        touristDestinationView.getIcoImages(flagList);
+        touristDestinationView.showServiceImages(flagList);
 
         Boolean starFlagOne = false;
         Boolean starFlagTwo = false;
@@ -193,5 +120,58 @@ public class TouristDestinationPresenterImpl implements TouristDestinationPresen
         flagStarList.add(starFlagFour);
         flagStarList.add(starFlagFive);
         touristDestinationView.getRatings(flagStarList);
+    }
+
+    @Override
+    public String shareTitle() {
+        return location.getTranslations().getTranslationOne().getTitle();
+    }
+
+    @Override
+    public String getLocationUri() {
+
+        //return uri = String.format(Locale.ENGLISH, "geo:%f,%f", location.getMeta().getLoc().getLat(), location.getMeta().getLoc().getLng());
+        return uri = "http://maps.google.com/maps?f=d&hl=en&saddr="+latLoc+","+lngLoc+"&daddr="+location.getMeta().getLoc().getLat()+","+location.getMeta().getLoc().getLng();
+    }
+
+    @Override
+    public Double getLocatinLat() {
+        return location.getMeta().getLoc().getLat();
+    }
+
+    @Override
+    public Double getLocatinLng() {
+        return location.getMeta().getLoc().getLng();
+    }
+
+    @Override
+    public String getLocaiton1Image(){
+        return imageList.get(1);
+    }
+
+    @Override
+    public void getCurrentLocation(Double lat, Double lng) {
+        latLoc = lat;
+        lngLoc = lng;
+    }
+
+    @Override
+    public void setImageId(View v) {
+        switch (v.getId()){
+            case R.id.iv_cover_image:
+                touristDestinationView.callImageActivity(location.getImages().getImageZero(), title);
+                break;
+            case R.id.iv_location1:
+                touristDestinationView.callImageActivity(location.getImages().getImageOne(), title);
+                break;
+            case R.id.iv_location2:
+                touristDestinationView.callImageActivity(location.getImages().getImageTwo(), title);
+                break;
+            case R.id.iv_location3:
+                touristDestinationView.callImageActivity(location.getImages().getImageThree(), title);
+                break;
+            default:
+                break;
+        }
     }
 }

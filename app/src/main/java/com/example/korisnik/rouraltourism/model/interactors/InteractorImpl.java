@@ -37,7 +37,7 @@ public class InteractorImpl extends BaseInteractorImpl implements Interactor {
     public InteractorImpl() {
     }
 
-    public void getZippedData(final Listener listener) {
+    public void getRatedLocations(final Listener listener) {
         addSubscription(Observable.zip(getLocation().defaultIfEmpty(new ArrayList<Location>()), getRatigns(), new Func2<List<Location>, List<Ratings>, DataContainer>() {
             @Override
             public DataContainer call(List<Location> locations, List<Ratings> ratings) {

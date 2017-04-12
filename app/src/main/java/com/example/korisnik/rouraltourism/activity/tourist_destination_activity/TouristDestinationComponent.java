@@ -11,5 +11,5 @@ import dagger.Subcomponent;
 @PerActivity
 @Subcomponent(modules = TouristDestinationModule.class)
 public interface TouristDestinationComponent {
-    void inject (TouristDestinationSingle touristDestinationSingle);
+    void inject (TouristDestinationSingleActivity touristDestinationSingleActivity);
 }

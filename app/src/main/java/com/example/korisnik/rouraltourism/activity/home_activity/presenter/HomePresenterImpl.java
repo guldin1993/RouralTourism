@@ -2,13 +2,9 @@ package com.example.korisnik.rouraltourism.activity.home_activity.presenter;
 
 import com.example.korisnik.rouraltourism.activity.home_activity.HomeView;
 import com.example.korisnik.rouraltourism.model.data_model.DataContainer;
-import com.example.korisnik.rouraltourism.model.data_model.Location;
 import com.example.korisnik.rouraltourism.model.interactors.Interactor;
 import com.example.korisnik.rouraltourism.model.interactors.listener.Listener;
 
-
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.inject.Inject;
 
@@ -29,13 +25,17 @@ public class HomePresenterImpl implements HomePresenter, Listener {
 
     @Override
     public void onDataSuccess(DataContainer dataContainer) {
-
         homeView.onLocations(dataContainer.getLocationList());
     }
 
     @Override
-    public void allLocations() {
-        interactor.getZippedData(this);
+    public void getAllLocations() {
+        interactor.getRatedLocations(this);
+    }
+
+    @Override
+    public void onStart() {
+        getAllLocations();
     }
 
     @Override

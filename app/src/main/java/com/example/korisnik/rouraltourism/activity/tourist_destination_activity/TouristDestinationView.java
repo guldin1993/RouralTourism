@@ -1,8 +1,8 @@
 package com.example.korisnik.rouraltourism.activity.tourist_destination_activity;
 
-import android.content.ContentResolver;
+import com.example.korisnik.rouraltourism.model.data_model.ServiceImagesSingle;
+import com.example.korisnik.rouraltourism.model.data_model.TextInformationsSIngle;
 
-import java.io.IOException;
 import java.util.List;
 
 /**
@@ -10,8 +10,9 @@ import java.util.List;
  */
 
 public interface TouristDestinationView {
-    void getSingleTextViews(List<String> strings);
-    void getPictures(List<String> pictures);
-    void getIcoImages(List<Boolean> icoList);
+    void showTextViews(TextInformationsSIngle informations);
+    void showLocationImages(List<String> pictures);
+    void showServiceImages(List<Boolean> images);
     void getRatings(List<Boolean> ratings);
+    void callImageActivity(String image, String title);
 }

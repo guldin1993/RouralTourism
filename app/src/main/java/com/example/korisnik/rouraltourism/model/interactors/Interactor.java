@@ -8,5 +8,5 @@ import com.example.korisnik.rouraltourism.model.interactors.listener.Listener;
  */
 
 public interface Interactor extends BaseInteracotr {
-    void getZippedData(Listener listener);
+    void getRatedLocations(Listener listener);
 }

@@ -1,6 +1,7 @@
 package com.example.korisnik.rouraltourism.activity.tourist_destination_activity.presenter;
 
 import android.graphics.Bitmap;
+import android.view.View;
 import android.widget.LinearLayout;
 
 import com.example.korisnik.rouraltourism.model.data_model.Location;
@@ -17,15 +18,11 @@ import java.util.List;
 
 public interface TouristDestinationPresenter {
     void initialize(Location location);
-    String setCoverImage();
     String shareTitle();
-    String setLocationUri();
-    Double setLocatinLat();
-    Double setLocatinLng();
-    CameraPosition setCameraPoistion();
-    String setLocaiton1Image();
-    String setLocation2Image();
-    String setLocation3Image();
-    String setLocation4Image();
-    void setCurrentLocation(Double lat, Double lng);
+    String getLocationUri();
+    Double getLocatinLat();
+    Double getLocatinLng();
+    String getLocaiton1Image();
+    void getCurrentLocation(Double lat, Double lng);
+    void setImageId(View v);
 }

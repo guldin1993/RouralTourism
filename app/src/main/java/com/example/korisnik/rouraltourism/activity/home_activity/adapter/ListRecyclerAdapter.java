@@ -2,6 +2,7 @@ package com.example.korisnik.rouraltourism.activity.home_activity.adapter;
 
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.korisnik.rouraltourism.R;
+import com.example.korisnik.rouraltourism.base.RouralTourismApplication;
 import com.example.korisnik.rouraltourism.model.data_model.BasicLocationData;
 import com.example.korisnik.rouraltourism.model.data_model.Location;
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -27,14 +29,12 @@ import butterknife.ButterKnife;
 
 public class ListRecyclerAdapter extends RecyclerView.Adapter<ListRecyclerAdapter.Holder> {
 
-    public static final String IMAGE_URL = "http://slavonijaturizam.eu/cms/photo/";
-
     private List<Location> locationList = new ArrayList<>();
     private RecyclerListener listener;
 
     @Override
     public Holder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.cell_roural_tourism, parent ,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.cell_roural_tourism, parent, false);
         return new Holder(view);
     }
 
@@ -43,7 +43,7 @@ public class ListRecyclerAdapter extends RecyclerView.Adapter<ListRecyclerAdapte
 
         float ratings = 0f;
         BasicLocationData basicData = locationList.get(position).getMeta().getBasic();
-        Uri imageUri = Uri.parse(IMAGE_URL + locationList.get(position).getImages().getImageZero());
+        Uri imageUri = Uri.parse(RouralTourismApplication.IMAGE_URL + locationList.get(position).getImages().getImageZero());
         holder.locationImage.setImageURI(imageUri);
 
         holder.tvTitle.setText(locationList.get(position).getTranslations().getTranslationOne().getTitle());
@@ -53,20 +53,20 @@ public class ListRecyclerAdapter extends RecyclerView.Adapter<ListRecyclerAdapte
         holder.tvSourceMail.setText(basicData.getMailLocation());
         holder.tvSourceWeb.setText(basicData.getWebLocation());
 
-        if (basicData.getWebLocation().isEmpty()|| basicData.getWebLocation().equals("")) {
+        if (basicData.getWebLocation().isEmpty() || basicData.getWebLocation().equals("")) {
             holder.llWeb.setVisibility(View.GONE);
-        }else {
+        } else {
             holder.tvSourceWeb.setText(basicData.getWebLocation());
             holder.llWeb.setVisibility(View.VISIBLE);
         }
         if (basicData.getPhoneLocation().isEmpty() || basicData.getPhoneLocation().equals("")) {
             holder.llSorucePhone.setVisibility(View.GONE);
-        }else {
+        } else {
             holder.llSorucePhone.setVisibility(View.VISIBLE);
         }
         if (basicData.getWebLocation().isEmpty() || basicData.getMailLocation().equals("")) {
             holder.llSoruceMail.setVisibility(View.GONE);
-        }else {
+        } else {
             holder.llSoruceMail.setVisibility(View.VISIBLE);
         }
 
@@ -90,15 +90,15 @@ public class ListRecyclerAdapter extends RecyclerView.Adapter<ListRecyclerAdapte
         return locationList.size();
     }
 
-    public void setLocationData(List<Location> locations){
-        if(locations != null && !locations.isEmpty()){
+    public void setLocationData(List<Location> locations) {
+        if (locations != null && !locations.isEmpty()) {
             this.locationList.clear();
             this.locationList.addAll(locations);
             notifyDataSetChanged();
         }
     }
 
-    private void setOneStar(Holder holder){
+    private void setOneStar(Holder holder) {
         holder.ivStarOne.setImageResource(R.mipmap.subcategory_star_white_big);
         holder.ivStarTwo.setImageResource(R.mipmap.subcategory_star_brawn);
         holder.ivStarThree.setImageResource(R.mipmap.subcategory_star_brawn);
@@ -106,7 +106,7 @@ public class ListRecyclerAdapter extends RecyclerView.Adapter<ListRecyclerAdapte
         holder.ivStarFive.setImageResource(R.mipmap.subcategory_star_brawn);
     }
 
-    private void setTwoStars(Holder holder){
+    private void setTwoStars(Holder holder) {
         holder.ivStarOne.setImageResource(R.mipmap.subcategory_star_white_big);
         holder.ivStarTwo.setImageResource(R.mipmap.subcategory_star_white_big);
         holder.ivStarThree.setImageResource(R.mipmap.subcategory_star_brawn);
@@ -114,7 +114,7 @@ public class ListRecyclerAdapter extends RecyclerView.Adapter<ListRecyclerAdapte
         holder.ivStarFive.setImageResource(R.mipmap.subcategory_star_brawn);
     }
 
-    private void setThreeStars(Holder holder){
+    private void setThreeStars(Holder holder) {
         holder.ivStarOne.setImageResource(R.mipmap.subcategory_star_white_big);
         holder.ivStarTwo.setImageResource(R.mipmap.subcategory_star_white_big);
         holder.ivStarThree.setImageResource(R.mipmap.subcategory_star_white_big);
@@ -122,7 +122,7 @@ public class ListRecyclerAdapter extends RecyclerView.Adapter<ListRecyclerAdapte
         holder.ivStarFive.setImageResource(R.mipmap.subcategory_star_brawn);
     }
 
-    private void setFourStars(Holder holder){
+    private void setFourStars(Holder holder) {
         holder.ivStarOne.setImageResource(R.mipmap.subcategory_star_white_big);
         holder.ivStarTwo.setImageResource(R.mipmap.subcategory_star_white_big);
         holder.ivStarThree.setImageResource(R.mipmap.subcategory_star_white_big);
@@ -130,7 +130,7 @@ public class ListRecyclerAdapter extends RecyclerView.Adapter<ListRecyclerAdapte
         holder.ivStarFive.setImageResource(R.mipmap.subcategory_star_brawn);
     }
 
-    private void setFiveStars(Holder holder){
+    private void setFiveStars(Holder holder) {
         holder.ivStarOne.setImageResource(R.mipmap.subcategory_star_white_big);
         holder.ivStarTwo.setImageResource(R.mipmap.subcategory_star_white_big);
         holder.ivStarThree.setImageResource(R.mipmap.subcategory_star_white_big);
@@ -138,7 +138,7 @@ public class ListRecyclerAdapter extends RecyclerView.Adapter<ListRecyclerAdapte
         holder.ivStarFive.setImageResource(R.mipmap.subcategory_star_white_big);
     }
 
-    private void setZeroStars(Holder holder){
+    private void setZeroStars(Holder holder) {
         holder.ivStarOne.setImageResource(R.mipmap.subcategory_star_brawn);
         holder.ivStarTwo.setImageResource(R.mipmap.subcategory_star_brawn);
         holder.ivStarThree.setImageResource(R.mipmap.subcategory_star_brawn);
@@ -146,7 +146,7 @@ public class ListRecyclerAdapter extends RecyclerView.Adapter<ListRecyclerAdapte
         holder.ivStarFive.setImageResource(R.mipmap.subcategory_star_brawn);
     }
 
-    class Holder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    class Holder extends RecyclerView.ViewHolder implements View.OnClickListener {
         @BindView(R.id.tv_address_cell)
         TextView tvAddress;
         @BindView(R.id.tv_city_cell)
@@ -160,8 +160,6 @@ public class ListRecyclerAdapter extends RecyclerView.Adapter<ListRecyclerAdapte
         @BindView(R.id.tv_source_telephone_cell)
         TextView tvSoruceTelephone;
 
-        /*@BindView(R.id.iv_location)
-        ImageView ivlocation;*/
         @BindView(R.id.iv_star_one)
         ImageView ivStarOne;
         @BindView(R.id.iv_star_two)
@@ -183,7 +181,6 @@ public class ListRecyclerAdapter extends RecyclerView.Adapter<ListRecyclerAdapte
         @BindView(R.id.sdvImage)
         SimpleDraweeView locationImage;
 
-
         public Holder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
@@ -192,12 +189,16 @@ public class ListRecyclerAdapter extends RecyclerView.Adapter<ListRecyclerAdapte
 
         @Override
         public void onClick(View v) {
-            if(listener != null)
+            if (listener != null)
                 listener.onRecyclerClick(locationList.get(getAdapterPosition()));
         }
     }
 
     public void setListener(RecyclerListener listener) {
         this.listener = listener;
+    }
+
+    public interface RecyclerListener {
+        void onRecyclerClick(Location location);
     }
 }

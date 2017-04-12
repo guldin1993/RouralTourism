@@ -1,31 +1,31 @@
 package com.example.korisnik.rouraltourism.activity.image_actvity;
 
 
-import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 
 import com.example.korisnik.rouraltourism.R;
-import com.example.korisnik.rouraltourism.activity.home_activity.adapter.ListRecyclerAdapter;
+import com.example.korisnik.rouraltourism.activity.tourist_destination_activity.TouristDestinationSingleActivity;
+import com.example.korisnik.rouraltourism.base.RouralTourismApplication;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class ImageActivity extends Activity {
+public class ImageActivity extends AppCompatActivity {
 
     @BindView(R.id.dv_full_screen)
     SimpleDraweeView dvFullScreenImage;
-    Uri uri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image);
         ButterKnife.bind(this);
-        uri = Uri.parse(ListRecyclerAdapter.IMAGE_URL + getIntent().getStringExtra("TO_IMAGE_ACTIVITY"));
-        //uri = Uri.parse("http://slavonijaturizam.eu/cms/photo/516");
+        Uri uri = Uri.parse(RouralTourismApplication.IMAGE_URL + getIntent().getStringExtra(TouristDestinationSingleActivity.EXTRA_IMAGE_TO_IMAGE_ACTIVITY));
         dvFullScreenImage.setAdjustViewBounds(true);
         dvFullScreenImage.setImageURI(uri);
+        setTitle(getIntent().getStringExtra(TouristDestinationSingleActivity.EXTRA_TEXT_TO_IMAGE_ACTIVITY));
     }
 }

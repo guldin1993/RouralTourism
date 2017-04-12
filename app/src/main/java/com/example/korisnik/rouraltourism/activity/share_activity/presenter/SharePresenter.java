@@ -11,6 +11,4 @@ public interface SharePresenter {
     void initialize(String image, String title);
     String setTitle();
     Bitmap getBitmapFromView(View view);
-
-    //Bitmap setImage(Context context, Bitmap bitmap, Uri uri);
 }
