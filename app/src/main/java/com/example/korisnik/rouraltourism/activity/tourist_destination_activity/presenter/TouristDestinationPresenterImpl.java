@@ -1,7 +1,5 @@
 package com.example.korisnik.rouraltourism.activity.tourist_destination_activity.presenter;
 
-import android.view.View;
-
 import com.example.korisnik.rouraltourism.R;
 import com.example.korisnik.rouraltourism.activity.tourist_destination_activity.TouristDestinationView;
 import com.example.korisnik.rouraltourism.base.RouralTourismApplication;
@@ -123,13 +121,7 @@ public class TouristDestinationPresenterImpl implements TouristDestinationPresen
     }
 
     @Override
-    public String shareTitle() {
-        return location.getTranslations().getTranslationOne().getTitle();
-    }
-
-    @Override
     public String getLocationUri() {
-
         //return uri = String.format(Locale.ENGLISH, "geo:%f,%f", location.getMeta().getLoc().getLat(), location.getMeta().getLoc().getLng());
         return uri = "http://maps.google.com/maps?f=d&hl=en&saddr="+latLoc+","+lngLoc+"&daddr="+location.getMeta().getLoc().getLat()+","+location.getMeta().getLoc().getLng();
     }
@@ -145,19 +137,20 @@ public class TouristDestinationPresenterImpl implements TouristDestinationPresen
     }
 
     @Override
-    public String getLocaiton1Image(){
-        return imageList.get(1);
-    }
-
-    @Override
-    public void getCurrentLocation(Double lat, Double lng) {
+    public void setCurrentLocation(Double lat, Double lng) {
         latLoc = lat;
         lngLoc = lng;
     }
 
+   @Override
+    public void currentLocation(){
+        uri = "http://maps.google.com/maps?f=d&hl=en&saddr="+latLoc+","+lngLoc+"&daddr="+location.getMeta().getLoc().getLat()+","+location.getMeta().getLoc().getLng();
+        touristDestinationView.callFindLocation();
+    }
+
     @Override
-    public void setImageId(View v) {
-        switch (v.getId()){
+    public void setImageId(int id) {
+        switch (id){
             case R.id.iv_cover_image:
                 touristDestinationView.callImageActivity(location.getImages().getImageZero(), title);
                 break;
@@ -173,5 +166,15 @@ public class TouristDestinationPresenterImpl implements TouristDestinationPresen
             default:
                 break;
         }
+    }
+
+    @Override
+    public void setShareData() {
+        touristDestinationView.callShareActivity(location.getImages().getImageZero(), title);
+    }
+
+    @Override
+    public void setTitle() {
+        touristDestinationView.showAppBarTitle(title);
     }
 }

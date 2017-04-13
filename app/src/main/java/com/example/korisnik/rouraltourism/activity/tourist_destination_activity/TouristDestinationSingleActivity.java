@@ -5,8 +5,10 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.BitmapFactory;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.MainThread;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -14,7 +16,6 @@ import android.text.Html;
 import android.text.TextUtils;
 import android.util.TypedValue;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -57,6 +58,10 @@ public class TouristDestinationSingleActivity extends AppCompatActivity implemen
 
     public static final int LOCATION_GPS_REQUEST = 10;
     public static final int CALL_REQUEST = 11;
+
+    private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 10;
+    private static final long MIN_TIME_BW_UPDATES = 1000 * 60 * 1;
+
     public static final String EXTRA_IMAGE_TO_IMAGE_ACTIVITY = "image";
     public static final String EXTRA_TEXT_TO_IMAGE_ACTIVITY = "title";
     public static final String EXTRA_IMAGE_TO_SHARE_ACTIVITY = "image";
@@ -135,17 +140,15 @@ public class TouristDestinationSingleActivity extends AppCompatActivity implemen
 
     private GoogleApiClient mGoogleApiClient;
 
+    private Intent findLoacationIntent;
+
+    private  android.location.Location mLastLocation;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_single);
         ButterKnife.bind(this);
-
-        RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.MATCH_PARENT);
-        p.addRule(RelativeLayout.ALIGN_PARENT_TOP);
-
 
         RouralTourismApplication.get(this).getAppComponent()
                 .plus(new TouristDestinationModule(this))
@@ -153,7 +156,7 @@ public class TouristDestinationSingleActivity extends AppCompatActivity implemen
         presenter.initialize((Location) getIntent().getParcelableExtra(HomeActivity.EXTRA_TO_TOURIST_DESTINATION_SINGLE));
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-        setTitle(presenter.shareTitle());
+        presenter.setTitle();
         getSupportActionBar().setLogo(R.mipmap.ic_launcher);
 
         ivCoverImage.setOnClickListener(this);
@@ -176,6 +179,11 @@ public class TouristDestinationSingleActivity extends AppCompatActivity implemen
     protected void onStop() {
         mGoogleApiClient.disconnect();
         super.onStop();
+    }
+
+    @Override
+    public void showAppBarTitle(String title) {
+        setTitle(title);
     }
 
     @OnClick(R.id.btn_expand)
@@ -202,6 +210,11 @@ public class TouristDestinationSingleActivity extends AppCompatActivity implemen
     }
 
     @Override
+    public void onClick(View v) {
+        presenter.setImageId(v.getId());
+    }
+
+    @Override
     public void callImageActivity(String image, String title) {
         Intent i = new Intent(this, ImageActivity.class);
         i.putExtra(EXTRA_IMAGE_TO_IMAGE_ACTIVITY, image);
@@ -209,16 +222,16 @@ public class TouristDestinationSingleActivity extends AppCompatActivity implemen
         startActivity(i);
     }
 
-    @Override
-    public void onClick(View v) {
-        presenter.setImageId(v);
-    }
-
     @OnClick(R.id.ll_share)
     public void onShareClick() {
+        presenter.setShareData();
+    }
+
+    @Override
+    public void callShareActivity(String image, String title) {
         Intent i = new Intent(this, ShareActivity.class);
-        i.putExtra(EXTRA_IMAGE_TO_SHARE_ACTIVITY, presenter.getLocaiton1Image());
-        i.putExtra(EXTRA_TEXT_TO_SHARE_ACTIVITY, presenter.shareTitle());
+        i.putExtra(EXTRA_IMAGE_TO_SHARE_ACTIVITY, image);
+        i.putExtra(EXTRA_TEXT_TO_SHARE_ACTIVITY, title);
         startActivity(i);
     }
 
@@ -248,15 +261,42 @@ public class TouristDestinationSingleActivity extends AppCompatActivity implemen
 
     @OnClick(R.id.ll_find_location_lat_lng)
     public void onLocationFindClick() {
+        presenter.currentLocation();
+    }
 
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            android.location.Location mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
-            if (mLastLocation != null) {
-                presenter.getCurrentLocation(mLastLocation.getLatitude(), (mLastLocation.getLongitude()));
+    @Override
+    public void callFindLocation() {
+        String provider = android.provider.Settings.Secure.getString(getContentResolver(), android.provider.Settings.Secure.LOCATION_PROVIDERS_ALLOWED);
+        mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+
+        /*LocationManager locationManager = (LocationManager) this.getSystemService(LOCATION_SERVICE);
+        boolean isGPSEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+        boolean isNetworkEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+
+        if (isNetworkEnabled) {
+            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, MIN_TIME_BW_UPDATES, MIN_DISTANCE_CHANGE_FOR_UPDATES, (android.location.LocationListener) this);
+            if (locationManager != null) {
+                android.location.Location location = locationManager
+                        .getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+                if (location != null) {
+                    Double latitude = location.getLatitude();
+                    Double longitude = location.getLongitude();
+                }
             }
-            Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(presenter.getLocationUri()));
-            this.startActivity(i);
+        }*/
 
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            if (mLastLocation != null) {
+                presenter.setCurrentLocation(mLastLocation.getLatitude(), (mLastLocation.getLongitude()));
+            }
+            if (!provider.contains("gps")) {
+                Intent i = new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                startActivity(i);
+                Toast.makeText(this, "You have to enable gps to use this attribute.", Toast.LENGTH_SHORT).show();
+            } else {
+                findLoacationIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(presenter.getLocationUri()));
+                this.startActivity(findLoacationIntent);
+            }
         } else {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_GPS_REQUEST);
         }
@@ -264,15 +304,22 @@ public class TouristDestinationSingleActivity extends AppCompatActivity implemen
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        String provider = android.provider.Settings.Secure.getString(getContentResolver(), android.provider.Settings.Secure.LOCATION_PROVIDERS_ALLOWED);
         switch (requestCode) {
             case LOCATION_GPS_REQUEST: {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    android.location.Location mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+
                     if (mLastLocation != null) {
-                        presenter.getCurrentLocation(mLastLocation.getLatitude(), (mLastLocation.getLongitude()));
+                       presenter.setCurrentLocation(mLastLocation.getLatitude(), (mLastLocation.getLongitude()));
                     }
-                    Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(presenter.getLocationUri()));
-                    this.startActivity(i);
+                    if (!provider.contains("gps")) {
+                        Intent i = new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                        startActivity(i);
+                        Toast.makeText(this, "You have to enable gps to use this attribute.", Toast.LENGTH_SHORT).show();
+                    } else {
+                        findLoacationIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(presenter.getLocationUri()));
+                        this.startActivity(findLoacationIntent);
+                    }
 
                 } else {
                     Toast.makeText(this, "GPS need to be turned on to use this atribute.", Toast.LENGTH_SHORT).show();
@@ -284,12 +331,12 @@ public class TouristDestinationSingleActivity extends AppCompatActivity implemen
                     Intent callIntent = new Intent(Intent.ACTION_CALL);
                     callIntent.setData(Uri.parse("tel:" + tvSoruceTelephone.getText().toString()));
                     startActivity(callIntent);
-                }else{
+                } else {
                     Toast.makeText(this, "You have to enable usage of phone calls to use this attribute.", Toast.LENGTH_SHORT).show();
                 }
                 break;
-                }
             }
+        }
     }
 
     @Override
@@ -426,7 +473,7 @@ public class TouristDestinationSingleActivity extends AppCompatActivity implemen
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             android.location.Location mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
             if (mLastLocation != null) {
-                presenter.getCurrentLocation(mLastLocation.getLatitude(), (mLastLocation.getLongitude()));
+                presenter.setCurrentLocation(mLastLocation.getLatitude(), (mLastLocation.getLongitude()));
             }
         }
     }

@@ -24,17 +24,126 @@
         android:layout_width="@dimen/location_image_width"
         android:layout_height="@dimen/location_image_height"
         android:layout_alignTop="@id/v_header_line"
-        android:layout_marginBottom="@dimen/image_holder_bottom_margin"
         android:layout_marginLeft="@dimen/image_holder_left_right_top_margin"
         android:layout_marginRight="@dimen/image_holder_left_right_top_margin"
-        android:layout_marginTop="@dimen/image_holder_left_right_top_margin"
+        android:layout_marginTop="10dp"
         fresco:placeholderImage="@mipmap/foto_bg" />
+
+    <LinearLayout
+        android:id="@+id/linear_text_view_holder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignRight="@id/sdvImage"
+        android:layout_alignTop="@id/v_header_line"
+        android:layout_toEndOf="@+id/sdvImage"
+        android:layout_toRightOf="@+id/sdvImage"
+        android:orientation="vertical"
+        android:paddingTop="5dp"
+        android:paddingLeft="4dp"
+        android:paddingBottom="5dp">
+
+        <TextView
+            android:id="@+id/tv_title_cell"
+            style="@style/TitleAppearance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_alignParentTop="true"
+            android:textAppearance="@style/TitleAppearance"
+            tools:text="Title"
+            android:layout_marginBottom="@dimen/text_view_title_bottom_margin"
+            android:layout_marginRight="7dp"
+            android:gravity="start" />
+
+        <TextView
+            android:id="@+id/tv_address_cell"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_title_cell"
+            tools:text="Address"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:layout_marginBottom="@dimen/text_view_title_bottom_margin"
+            android:layout_marginRight="7dp"
+            android:gravity="start" />
+
+        <TextView
+            android:id="@+id/tv_city_cell"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="City"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:layout_below="@+id/tv_address_cell"
+            android:layout_marginBottom="@dimen/text_view_title_bottom_margin"
+            android:layout_marginRight="7dp"
+            android:paddingBottom="3dp"
+            android:gravity="start" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_cell"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/sdvImage"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="1dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_toLeftOf="@id/linear_text_view_holder"
+        android:layout_toStartOf="@id/linear_text_view_holder"
+        android:background="@mipmap/subcategory_stars_bg"
+        android:orientation="horizontal">
+
+
+        <ImageView
+            android:id="@+id/iv_star_one"
+            android:layout_width="@dimen/star_size"
+            android:layout_height="@dimen/star_size"
+            android:layout_gravity="center"
+            android:layout_marginRight="@dimen/stars_margin"
+            android:layout_marginLeft="@dimen/stars_margin"
+            android:background="@mipmap/subcategory_star_brawn" />
+
+        <ImageView
+            android:id="@+id/iv_star_two"
+            android:layout_width="@dimen/star_size"
+            android:layout_height="@dimen/star_size"
+            android:layout_gravity="center"
+            android:layout_marginRight="@dimen/stars_margin"
+            android:background="@mipmap/subcategory_star_brawn" />
+
+        <ImageView
+            android:id="@+id/iv_star_three"
+            android:layout_width="@dimen/star_size"
+            android:layout_height="@dimen/star_size"
+            android:layout_gravity="center"
+            android:layout_marginRight="@dimen/stars_margin"
+            android:background="@mipmap/subcategory_star_brawn" />
+
+        <ImageView
+            android:id="@+id/iv_star_four"
+            android:layout_width="@dimen/star_size"
+            android:layout_height="@dimen/star_size"
+            android:layout_gravity="center"
+            android:layout_marginRight="@dimen/stars_margin"
+            android:background="@mipmap/subcategory_star_brawn" />
+
+        <ImageView
+            android:id="@+id/iv_star_five"
+            android:layout_width="@dimen/star_size"
+            android:layout_height="@dimen/star_size"
+            android:layout_gravity="center"
+            android:layout_marginRight="@dimen/stars_margin"
+            android:background="@mipmap/subcategory_star_brawn" />
+
+    </LinearLayout>
 
     <View
         android:id="@+id/view_line"
         android:layout_width="fill_parent"
         android:layout_height="@dimen/grey_view_line_height"
-        android:layout_below="@id/sdvImage"
+        android:layout_below="@id/ll_cell"
         android:layout_marginRight="22dp"
         android:layout_marginTop="@dimen/element_top_margin"
         android:background="@android:color/darker_gray" />
@@ -49,116 +158,14 @@
         android:src="@mipmap/events_arrow_right" />
 
     <LinearLayout
-        android:id="@+id/linear_text_view_holder"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignBottom="@id/view_line"
-        android:layout_alignParentRight="true"
-        android:layout_alignRight="@id/sdvImage"
-        android:layout_alignTop="@id/v_header_line"
-        android:layout_toEndOf="@+id/sdvImage"
-        android:layout_toRightOf="@+id/sdvImage"
-        android:orientation="vertical"
-        android:paddingTop="5dp">
-
-        <TextView
-            android:id="@+id/tv_title_cell"
-            style="@style/TitleAppearance"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:layout_alignParentTop="true"
-            android:textAppearance="@style/TitleAppearance"
-            tools:text="Title"
-            android:layout_marginBottom="@dimen/text_view_title_bottom_margin"
-            android:gravity="start" />
-
-        <TextView
-            android:id="@+id/tv_address_cell"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tv_title_cell"
-            tools:text="Address"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:layout_marginBottom="@dimen/text_view_title_bottom_margin"
-            android:gravity="start" />
-
-        <TextView
-            android:id="@+id/tv_city_cell"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:text="City"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:layout_below="@+id/tv_address_cell"
-            android:layout_marginBottom="@dimen/text_view_title_bottom_margin"
-            android:gravity="start" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/ll_cell"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/view_line"
-        android:gravity="top"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_toLeftOf="@id/linear_text_view_holder"
-        android:layout_toStartOf="@id/linear_text_view_holder"
-        android:background="@mipmap/subcategory_stars_bg"
-        android:orientation="horizontal">
-
-        <ImageView
-            android:layout_width="10dp"
-            android:layout_height="wrap_content"
-            android:visibility="invisible"
-            android:background="@mipmap/subcategory_stars_bg" />
-
-        <ImageView
-            android:id="@+id/iv_star_one"
-            android:layout_width="@dimen/star_size"
-            android:layout_height="@dimen/star_size"
-            android:layout_gravity="center"
-            android:background="@mipmap/subcategory_star_brawn" />
-
-        <ImageView
-            android:id="@+id/iv_star_two"
-            android:layout_width="@dimen/star_size"
-            android:layout_height="@dimen/star_size"
-            android:layout_gravity="center"
-            android:background="@mipmap/subcategory_star_brawn" />
-
-        <ImageView
-            android:id="@+id/iv_star_three"
-            android:layout_width="@dimen/star_size"
-            android:layout_height="@dimen/star_size"
-            android:layout_gravity="center"
-            android:background="@mipmap/subcategory_star_brawn" />
-
-        <ImageView
-            android:id="@+id/iv_star_four"
-            android:layout_width="@dimen/star_size"
-            android:layout_height="@dimen/star_size"
-            android:layout_gravity="center"
-            android:background="@mipmap/subcategory_star_brawn" />
-
-        <ImageView
-            android:id="@+id/iv_star_five"
-            android:layout_width="@dimen/star_size"
-            android:layout_height="@dimen/star_size"
-            android:layout_gravity="center"
-            android:background="@mipmap/subcategory_star_brawn" />
-
-    </LinearLayout>
-
-    <LinearLayout
         android:id="@+id/ll_source_phone_cell"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignTop="@id/view_line"
-        android:layout_marginBottom="@dimen/source_image_bottom_margin"
         android:layout_marginLeft="@dimen/source_image_left_margin"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="8dp"
+        android:paddingBottom="1.5dp"
+        android:gravity="center_vertical"
         android:orientation="horizontal">
 
         <ImageView
@@ -184,17 +191,19 @@
         android:layout_below="@id/ll_source_phone_cell"
         android:layout_marginBottom="@dimen/source_image_bottom_margin"
         android:layout_marginLeft="@dimen/source_image_left_margin"
+        android:paddingBottom="1.5dp"
+        android:paddingTop="1.5dp"
+        android:gravity="center_vertical"
         android:orientation="horizontal">
 
         <ImageView
             android:layout_width="@dimen/source_image_size"
             android:layout_height="@dimen/source_image_size"
-            android:layout_gravity="top"
             android:background="@mipmap/map_icon_mail" />
 
         <TextView
             android:id="@+id/tv_source_mail_cell"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
@@ -205,21 +214,23 @@
 
     <LinearLayout
         android:id="@+id/ll_web_cell"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/ll_source_mail"
         android:layout_marginLeft="@dimen/source_image_left_margin"
+        android:paddingBottom="5dp"
+        android:gravity="center_vertical"
+        android:paddingTop="1.5dp"
         android:orientation="horizontal">
 
         <ImageView
             android:layout_width="@dimen/source_image_size"
             android:layout_height="@dimen/source_image_size"
-            android:layout_gravity="top"
             android:background="@mipmap/map_icon_web" />
 
         <TextView
             android:id="@+id/tv_source_web_cell"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"

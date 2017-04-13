@@ -1,5 +1,7 @@
 package com.example.korisnik.rouraltourism.activity.tourist_destination_activity;
 
+import android.net.Uri;
+
 import com.example.korisnik.rouraltourism.model.data_model.ServiceImagesSingle;
 import com.example.korisnik.rouraltourism.model.data_model.TextInformationsSIngle;
 
@@ -15,4 +17,7 @@ public interface TouristDestinationView {
     void showServiceImages(List<Boolean> images);
     void getRatings(List<Boolean> ratings);
     void callImageActivity(String image, String title);
+    void callShareActivity(String image, String title);
+    void showAppBarTitle(String title);
+    void callFindLocation();
 }

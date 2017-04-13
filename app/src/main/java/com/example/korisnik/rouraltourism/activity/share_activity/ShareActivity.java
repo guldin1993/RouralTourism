@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -37,9 +38,8 @@ import butterknife.OnClick;
 public class ShareActivity extends AppCompatActivity implements ShareView {
 
     private static final int CAMERA_REQUEST = 1888;
+    private static final int REQUEST_WRITE_PERMISSION = 7;
 
-    Uri imageUri;
-    Bitmap bitmap;
 
     @BindView(R.id.iv_cover_image)
     SimpleDraweeView ivCoverImage;
@@ -53,7 +53,9 @@ public class ShareActivity extends AppCompatActivity implements ShareView {
     @Inject
     SharePresenterImpl presenter;
 
-    Boolean flagTakePhoto = false;
+    private boolean flagTakePhoto = false;
+
+    private Uri imageUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,7 +81,7 @@ public class ShareActivity extends AppCompatActivity implements ShareView {
         }
     }
 
-   @Override
+    @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
         switch (requestCode) {
             case CAMERA_REQUEST: {
@@ -91,7 +93,7 @@ public class ShareActivity extends AppCompatActivity implements ShareView {
                 } else {
                     Toast.makeText(this, "Photo can't be taken without permission to use camera", Toast.LENGTH_SHORT).show();
                 }
-                return;
+                break;
             }
         }
     }
@@ -104,8 +106,8 @@ public class ShareActivity extends AppCompatActivity implements ShareView {
 
             imageUri = data.getData();
             ivCoverImage.setImageURI(imageUri);
-            ivCoverImage.setMinimumWidth(metrics.widthPixels);
-            ivCoverImage.setMinimumHeight(190);
+           /* ivCoverImage.setMinimumWidth(metrics.widthPixels);
+            ivCoverImage.setMinimumHeight(190);*/
 
             //Bitmap image = (Bitmap) data.getExtras().get("data");
             //presenter.setImage(this, (Bitmap) data.getExtras().get("data"), imageUri);
@@ -113,31 +115,39 @@ public class ShareActivity extends AppCompatActivity implements ShareView {
     }
 
     @OnClick(R.id.ll_share_online)
-    public void onCoverPictureClick() {
+    public void onShareOnlineClick() {
+
 
         Intent shareIntent = new Intent(Intent.ACTION_SEND);
-        shareIntent.setType("image/*");
+        shareIntent.setType("*/*");
         shareIntent.putExtra(Intent.EXTRA_SUBJECT, "RouralTourism");
-        //shareIntent.putExtra(Intent.EXTRA_TEXT, "share this");
-        if (flagTakePhoto)
+        shareIntent.putExtra(Intent.EXTRA_TEXT, etShateContent.getText());
+        if (flagTakePhoto) {
             shareIntent.putExtra(Intent.EXTRA_STREAM, imageUri);
-        else {
-            shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-            shareIntent.putExtra(Intent.EXTRA_STREAM, presenter.getImageUri(this, presenter.getBitmapFromView(ivCoverImage)));
+            startActivity(Intent.createChooser(shareIntent, "Share via"));
+        } else {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                shareIntent.putExtra(Intent.EXTRA_STREAM, presenter.getImageUri(this, presenter.getBitmapFromView(ivCoverImage)));
+                startActivity(Intent.createChooser(shareIntent, "Share via"));
+            } else {
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_WRITE_PERMISSION);
+                shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                shareIntent.putExtra(Intent.EXTRA_STREAM, presenter.getImageUri(this, presenter.getBitmapFromView(ivCoverImage)));
+                startActivity(Intent.createChooser(shareIntent, "Share via"));
+            }
         }
-        startActivity(Intent.createChooser(shareIntent, "Share via"));
     }
 
     @Override
-    public void getCoverImage(String baseUrl, String image) {
-        imageUri = Uri.parse(baseUrl + image);
-        ivCoverImage.setImageURI(imageUri);
+    public void getCoverImage(Uri uri) {
+        ivCoverImage.setImageURI(uri);
 
-        try {
+        /*try {
             bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        }*/
     }
 
     @Override

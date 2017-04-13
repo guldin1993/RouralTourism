@@ -45,7 +45,7 @@ public class HomeActivity extends AppCompatActivity implements HomeView, ListRec
         recyclerView.setHasFixedSize(true);
         adapter.setListener(this);
         recyclerView.setAdapter(adapter);
-        getSupportActionBar().setIcon((R.mipmap.ic_launcher));
+        //getActionBar().setIcon(R.mipmap.ic_launcher);
     }
 
     @Override

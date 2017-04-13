@@ -53,18 +53,18 @@ public class ListRecyclerAdapter extends RecyclerView.Adapter<ListRecyclerAdapte
         holder.tvSourceMail.setText(basicData.getMailLocation());
         holder.tvSourceWeb.setText(basicData.getWebLocation());
 
-        if (basicData.getWebLocation().isEmpty() || basicData.getWebLocation().equals("")) {
+        if (basicData.getWebLocation() == null || basicData.getWebLocation().equals("")) {
             holder.llWeb.setVisibility(View.GONE);
         } else {
             holder.tvSourceWeb.setText(basicData.getWebLocation());
             holder.llWeb.setVisibility(View.VISIBLE);
         }
-        if (basicData.getPhoneLocation().isEmpty() || basicData.getPhoneLocation().equals("")) {
+        if (basicData.getPhoneLocation() == null || basicData.getPhoneLocation().equals("")) {
             holder.llSorucePhone.setVisibility(View.GONE);
         } else {
             holder.llSorucePhone.setVisibility(View.VISIBLE);
         }
-        if (basicData.getWebLocation().isEmpty() || basicData.getMailLocation().equals("")) {
+        if (basicData.getWebLocation() == null || basicData.getMailLocation().equals("")) {
             holder.llSoruceMail.setVisibility(View.GONE);
         } else {
             holder.llSoruceMail.setVisibility(View.VISIBLE);

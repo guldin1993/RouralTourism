@@ -18,11 +18,12 @@ import java.util.List;
 
 public interface TouristDestinationPresenter {
     void initialize(Location location);
-    String shareTitle();
+    void setTitle();
     String getLocationUri();
     Double getLocatinLat();
     Double getLocatinLng();
-    String getLocaiton1Image();
-    void getCurrentLocation(Double lat, Double lng);
-    void setImageId(View v);
+    void setCurrentLocation(Double lat, Double lng);
+    void setImageId(int id);
+    void setShareData();
+    void currentLocation();
 }

@@ -9,11 +9,17 @@ import android.net.Uri;
 import android.provider.MediaStore;
 import android.view.View;
 
-import com.example.korisnik.rouraltourism.activity.home_activity.adapter.ListRecyclerAdapter;
 import com.example.korisnik.rouraltourism.activity.share_activity.ShareView;
 import com.example.korisnik.rouraltourism.base.RouralTourismApplication;
+import com.facebook.binaryresource.BinaryResource;
+import com.facebook.binaryresource.FileBinaryResource;
+import com.facebook.cache.common.CacheKey;
+import com.facebook.imagepipeline.cache.DefaultCacheKeyFactory;
+import com.facebook.imagepipeline.core.ImagePipelineFactory;
+import com.facebook.imagepipeline.request.ImageRequest;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 
 import javax.inject.Inject;
 
@@ -24,7 +30,6 @@ import javax.inject.Inject;
 public class SharePresenterImpl implements SharePresenter {
 
     private ShareView shareView;
-    private String image;
     private String title;
 
     @Inject
@@ -35,15 +40,22 @@ public class SharePresenterImpl implements SharePresenter {
 
     @Override
     public void initialize(String image, String title) {
-        this.image = image;
         this.title = title;
         String editText;
 
         editText = "Posjetite " + title + " #RouralTourism";
+        Uri uri = Uri.parse(RouralTourismApplication.IMAGE_URL + image);
 
-        shareView.getCoverImage(RouralTourismApplication.IMAGE_URL, this.image);
+        shareView.getCoverImage(uri);
         shareView.getTitle(this.title);
         shareView.getEditTextText(editText);
+
+
+
+        /*ImageRequest imageRequest=ImageRequest.fromUri(uri);
+        CacheKey cacheKey=DefaultCacheKeyFactory.getInstance().getEncodedCacheKey(imageRequest);
+        BinaryResource resource = ImagePipelineFactory.getInstance().getMainDiskStorageCache().getResource(cacheKey);
+        File file=((FileBinaryResource)resource).getFile();*/
     }
 
     @Override

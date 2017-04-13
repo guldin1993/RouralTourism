@@ -6,7 +6,8 @@
     android:background="@color/lighter_black"
     tools:context="com.example.korisnik.rouraltourism.activity.image_actvity.ImageActivity">
 
-    <LinearLayout
+    <RelativeLayout
+        android:id="@+id/rl_layout"
         android:layout_width="match_parent"
         android:layout_height="300dp"
         android:orientation="vertical"
@@ -21,7 +22,8 @@
             android:layout_height="match_parent"
             android:adjustViewBounds="true"
             android:gravity="center"
+            android:scaleType="matrix"
             fresco:actualImageScaleType="fitCenter"/>
 
-    </LinearLayout>
+    </RelativeLayout>
 </FrameLayout>
