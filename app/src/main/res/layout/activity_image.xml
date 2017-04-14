@@ -15,8 +15,7 @@
         android:scaleType="centerInside"
         android:adjustViewBounds="true">
 
-
-        <com.facebook.drawee.view.SimpleDraweeView
+        <com.example.korisnik.rouraltourism.activity.image_actvity.ZoomableDraweeView
             android:id="@+id/dv_full_screen"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

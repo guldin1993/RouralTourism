@@ -4,26 +4,25 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.AttributeSet;
-import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 
 /**
- * Created by Korisnik on 13.4.2017..
+ * A SimpleDraweeView that supports Pinch to zoom.
  */
-
 public class ZoomableDraweeView extends SimpleDraweeView {
-    private ScaleGestureDetector mScaleDetector;
-    private GestureDetector mGestureDetector;
+    private final ScaleGestureDetector mScaleDetector;
+    private final ScaleGestureDetector.OnScaleGestureListener mScaleListener;
 
-    private float mCurrentScale = 1.0f;
-    private Matrix mCurrentMatrix;
+    private float mCurrentScale;
+    private final Matrix mCurrentMatrix;
     private float mMidX;
     private float mMidY;
-    private OnZoomChangeListener onZoomChangeListener;
+    @Nullable private OnZoomChangeListener mListener;
 
     public ZoomableDraweeView(Context context) {
         this(context, null);
@@ -35,16 +34,11 @@ public class ZoomableDraweeView extends SimpleDraweeView {
 
     public ZoomableDraweeView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        init();
-    }
-
-    private void init() {
-        ScaleGestureDetector.OnScaleGestureListener mScaleListener = new ScaleGestureDetector.SimpleOnScaleGestureListener() {
+        mScaleListener = new ScaleGestureDetector.SimpleOnScaleGestureListener() {
             @Override
             public boolean onScale(ScaleGestureDetector detector) {
                 float scaleFactor = detector.getScaleFactor();
                 float newScale = mCurrentScale * scaleFactor;
-                // Prevent from zooming out more than original
                 if (newScale > 1.0f) {
                     // We initialize this lazily so that we don't have to register (and force the user
                     // to unregister) a global layout listener on the view.
@@ -55,7 +49,6 @@ public class ZoomableDraweeView extends SimpleDraweeView {
                         mMidY = getHeight() / 2.0f;
                     }
                     mCurrentScale = newScale;
-                    // support pinch zoom
                     mCurrentMatrix.postScale(scaleFactor, scaleFactor, mMidX, mMidY);
                     invalidate();
                 } else {
@@ -63,8 +56,8 @@ public class ZoomableDraweeView extends SimpleDraweeView {
                     reset();
                 }
 
-                if (onZoomChangeListener != null && scaleFactor != 1.0f) {
-                    onZoomChangeListener.onZoomChange(mCurrentScale);
+                if (mListener != null && scaleFactor != 1.0f) {
+                    mListener.onZoomChange(mCurrentScale);
                 }
 
                 return true;
@@ -72,27 +65,10 @@ public class ZoomableDraweeView extends SimpleDraweeView {
         };
         mScaleDetector = new ScaleGestureDetector(getContext(), mScaleListener);
         mCurrentMatrix = new Matrix();
-
-        GestureDetector.SimpleOnGestureListener mGestureListener = new GestureDetector.SimpleOnGestureListener() {
-            public boolean onScroll (MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
-                // support drag
-                // disable drag when normal scale
-                if (mCurrentScale > 1.0f) {
-                    mCurrentMatrix.postTranslate(-distanceX, -distanceY);
-                    invalidate();
-                }
-                return true;
-            }
-        };
-        mGestureDetector = new GestureDetector(getContext(), mGestureListener);
     }
 
-    /**
-     * manual call
-     * @param listener OnZoomChangeListener
-     */
     public void setOnZoomChangeListener(OnZoomChangeListener listener) {
-        onZoomChangeListener = listener;
+        mListener = listener;
     }
 
     @Override
@@ -111,31 +87,21 @@ public class ZoomableDraweeView extends SimpleDraweeView {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        mGestureDetector.onTouchEvent(event);
-
         return mScaleDetector.onTouchEvent(event) || super.onTouchEvent(event);
     }
 
-    /**
-     * Resets the zoom of the attached image.
-     * This has no effect if the image has been destroyed
-     */
+    public void resetZoom() {
+        reset();
+    }
+
     public void reset() {
         mCurrentMatrix.reset();
         mCurrentScale = 1.0f;
         invalidate();
     }
 
-    /**
-     * A listener interface for when the zoom scale changes
-     */
     public interface OnZoomChangeListener {
-        /**
-         * Callback method getting triggered when the zoom scale changes.
-         * This is not called when the zoom is programmatically reset
-         *
-         * @param scale the new scale
-         */
-        void onZoomChange(float scale);
+
+        public void onZoomChange(float scale);
     }
 }

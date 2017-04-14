@@ -34,8 +34,7 @@
         </activity>
         <activity
             android:name=".activity.tourist_destination_activity.TouristDestinationSingleActivity"
-            android:label="@string/title_activity_single"
-            />
+            android:label="@string/title_activity_single" />
 
        <!-- The API key for Google Maps-based APIs is defined as a string resource.
         (See the file "res/values/google_maps_api.xml").
@@ -52,8 +51,9 @@
         <activity
             android:name=".activity.maps_activity.MapsActivity"
             android:label="@string/title_activity_maps" />
+
         <activity android:name=".activity.share_activity.ShareActivity"
-            android:label="Share"/>
+            android:label="Share" />
 
         <activity
             android:name=".activity.image_actvity.ImageActivity"

@@ -15,9 +15,10 @@ public interface TouristDestinationView {
     void showTextViews(TextInformationsSIngle informations);
     void showLocationImages(List<String> pictures);
     void showServiceImages(List<Boolean> images);
-    void getRatings(List<Boolean> ratings);
+    void showRatings(List<Boolean> ratings);
     void callImageActivity(String image, String title);
     void callShareActivity(String image, String title);
     void showAppBarTitle(String title);
-    void callFindLocation();
+    void callFindLocation(String url);
+    void onMapLocation(Double latLoc, Double lngLoc);
 }

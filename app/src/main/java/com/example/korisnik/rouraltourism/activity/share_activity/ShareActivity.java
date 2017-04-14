@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.media.MediaDataSource;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.MediaStore;
@@ -24,9 +25,29 @@ import com.example.korisnik.rouraltourism.R;
 import com.example.korisnik.rouraltourism.activity.share_activity.presenter.SharePresenterImpl;
 import com.example.korisnik.rouraltourism.activity.tourist_destination_activity.TouristDestinationSingleActivity;
 import com.example.korisnik.rouraltourism.base.RouralTourismApplication;
+import com.facebook.binaryresource.BinaryResource;
+import com.facebook.binaryresource.FileBinaryResource;
+import com.facebook.cache.common.CacheKey;
+import com.facebook.common.executors.CallerThreadExecutor;
+import com.facebook.common.references.CloseableReference;
+import com.facebook.datasource.DataSource;
+import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.drawee.view.DraweeHolder;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.facebook.imageformat.ImageFormat;
+import com.facebook.imageformat.ImageFormatChecker;
+import com.facebook.imagepipeline.cache.DefaultCacheKeyFactory;
+import com.facebook.imagepipeline.common.ImageDecodeOptions;
+import com.facebook.imagepipeline.core.ImagePipeline;
+import com.facebook.imagepipeline.core.ImagePipelineFactory;
+import com.facebook.imagepipeline.datasource.BaseBitmapDataSubscriber;
+import com.facebook.imagepipeline.image.CloseableImage;
+import com.facebook.imagepipeline.request.ImageRequest;
+import com.facebook.imagepipeline.request.ImageRequestBuilder;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import javax.inject.Inject;
@@ -57,6 +78,8 @@ public class ShareActivity extends AppCompatActivity implements ShareView {
 
     private Uri imageUri;
 
+    DataSource<CloseableReference<CloseableImage>> dataSource;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,8 +87,13 @@ public class ShareActivity extends AppCompatActivity implements ShareView {
         ButterKnife.bind(this);
         RouralTourismApplication.get(this).getAppComponent().plus(new ShareModule(this)).inject(this);
         presenter.initialize(getIntent().getStringExtra(TouristDestinationSingleActivity.EXTRA_IMAGE_TO_SHARE_ACTIVITY), getIntent().getStringExtra(TouristDestinationSingleActivity.EXTRA_TEXT_TO_SHARE_ACTIVITY));
-        setTitle(presenter.setTitle());
+        presenter.setTitle();
         getSupportActionBar().setIcon((R.mipmap.ic_launcher));
+    }
+
+    @Override
+    public void showAppBarTitle(String title) {
+        setTitle(title);
     }
 
     @OnClick(R.id.iv_take_photo)
@@ -106,16 +134,28 @@ public class ShareActivity extends AppCompatActivity implements ShareView {
 
             imageUri = data.getData();
             ivCoverImage.setImageURI(imageUri);
-           /* ivCoverImage.setMinimumWidth(metrics.widthPixels);
-            ivCoverImage.setMinimumHeight(190);*/
-
-            //Bitmap image = (Bitmap) data.getExtras().get("data");
-            //presenter.setImage(this, (Bitmap) data.getExtras().get("data"), imageUri);
         }
     }
 
     @OnClick(R.id.ll_share_online)
     public void onShareOnlineClick() {
+       // Uri uri= Uri.parse("http://slavonijaturizam.eu/cms/photo/516");
+
+        /*
+        ImageDecodeOptions decodeOptions = ImageDecodeOptions.newBuilder()
+                .build();
+
+        ImageRequest request = ImageRequestBuilder
+                .newBuilderWithSource(uri)
+                .setImageDecodeOptions(decodeOptions)
+                .setAutoRotateEnabled(true)
+                .setLocalThumbnailPreviewsEnabled(true)
+                .setLowestPermittedRequestLevel(ImageRequest.RequestLevel.FULL_FETCH)
+                .setProgressiveRenderingEnabled(false)
+                .build();
+
+        ImagePipeline imagePipeline = Fresco.getImagePipeline();
+        dataSource = imagePipeline.fetchDecodedImage(request, this);*/
 
 
         Intent shareIntent = new Intent(Intent.ACTION_SEND);
@@ -136,6 +176,7 @@ public class ShareActivity extends AppCompatActivity implements ShareView {
                 shareIntent.putExtra(Intent.EXTRA_STREAM, presenter.getImageUri(this, presenter.getBitmapFromView(ivCoverImage)));
                 startActivity(Intent.createChooser(shareIntent, "Share via"));
             }
+
         }
     }
 
@@ -143,12 +184,21 @@ public class ShareActivity extends AppCompatActivity implements ShareView {
     public void getCoverImage(Uri uri) {
         ivCoverImage.setImageURI(uri);
 
-        /*try {
-            bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }*/
     }
+
+  /*  public void savePicture(){
+        ImageRequest downloadRequest = ImageRequest.fromUri(imageUri);
+        CacheKey cacheKey = DefaultCacheKeyFactory.getInstance().getEncodedCacheKey(downloadRequest,null);
+        if (ImagePipelineFactory.getInstance().getMainFileCache().hasKey(cacheKey)) {
+            BinaryResource resource = ImagePipelineFactory.getInstance().getMainFileCache().getResource(cacheKey);
+            File cacheFile = ((FileBinaryResource) resource).getFile();
+            try {
+                FileInputStream fis = new FileInputStream(cacheFile);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+    }*/
 
     @Override
     public void getTitle(String title) {

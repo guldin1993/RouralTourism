@@ -32,6 +32,6 @@
     <dimen name="take_photo_size">50dp</dimen>
     <dimen name="take_photo_marginTop">50dp</dimen>
     <dimen name="edit_text_share_content_padding">10dp</dimen>
-    <dimen name="ll_share_online_padding">10dp</dimen>
+    <dimen name="ll_share_online_padding">7dp</dimen>
     <dimen name="button_share_padding">7dp</dimen>
 </resources>

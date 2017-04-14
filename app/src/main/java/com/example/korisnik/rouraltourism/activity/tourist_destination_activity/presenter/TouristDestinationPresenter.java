@@ -19,11 +19,9 @@ import java.util.List;
 public interface TouristDestinationPresenter {
     void initialize(Location location);
     void setTitle();
-    String getLocationUri();
-    Double getLocatinLat();
-    Double getLocatinLng();
     void setCurrentLocation(Double lat, Double lng);
     void setImageId(int id);
     void setShareData();
     void currentLocation();
+    void setMapLocation();
 }

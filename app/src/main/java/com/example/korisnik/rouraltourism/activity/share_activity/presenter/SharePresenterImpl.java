@@ -59,8 +59,8 @@ public class SharePresenterImpl implements SharePresenter {
     }
 
     @Override
-    public String setTitle() {
-        return title;
+    public void setTitle() {
+        shareView.showAppBarTitle(title);
     }
 
     public Bitmap getBitmapFromView(View view) {

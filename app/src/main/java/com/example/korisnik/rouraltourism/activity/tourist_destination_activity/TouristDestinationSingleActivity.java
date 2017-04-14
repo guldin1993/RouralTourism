@@ -12,6 +12,7 @@ import android.support.annotation.MainThread;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.text.TextUtils;
 import android.util.TypedValue;
@@ -58,9 +59,6 @@ public class TouristDestinationSingleActivity extends AppCompatActivity implemen
 
     public static final int LOCATION_GPS_REQUEST = 10;
     public static final int CALL_REQUEST = 11;
-
-    private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 10;
-    private static final long MIN_TIME_BW_UPDATES = 1000 * 60 * 1;
 
     public static final String EXTRA_IMAGE_TO_IMAGE_ACTIVITY = "image";
     public static final String EXTRA_TEXT_TO_IMAGE_ACTIVITY = "title";
@@ -142,7 +140,9 @@ public class TouristDestinationSingleActivity extends AppCompatActivity implemen
 
     private Intent findLoacationIntent;
 
-    private  android.location.Location mLastLocation;
+    private android.location.Location mLastLocation;
+
+    private GoogleMap mMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -156,6 +156,8 @@ public class TouristDestinationSingleActivity extends AppCompatActivity implemen
         presenter.initialize((Location) getIntent().getParcelableExtra(HomeActivity.EXTRA_TO_TOURIST_DESTINATION_SINGLE));
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+        /*Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setLogo(R.mipmap.ic_launcher);*/
         presenter.setTitle();
         getSupportActionBar().setLogo(R.mipmap.ic_launcher);
 
@@ -261,45 +263,29 @@ public class TouristDestinationSingleActivity extends AppCompatActivity implemen
 
     @OnClick(R.id.ll_find_location_lat_lng)
     public void onLocationFindClick() {
-        presenter.currentLocation();
-    }
-
-    @Override
-    public void callFindLocation() {
         String provider = android.provider.Settings.Secure.getString(getContentResolver(), android.provider.Settings.Secure.LOCATION_PROVIDERS_ALLOWED);
         mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
 
-        /*LocationManager locationManager = (LocationManager) this.getSystemService(LOCATION_SERVICE);
-        boolean isGPSEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
-        boolean isNetworkEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
-
-        if (isNetworkEnabled) {
-            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, MIN_TIME_BW_UPDATES, MIN_DISTANCE_CHANGE_FOR_UPDATES, (android.location.LocationListener) this);
-            if (locationManager != null) {
-                android.location.Location location = locationManager
-                        .getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-                if (location != null) {
-                    Double latitude = location.getLatitude();
-                    Double longitude = location.getLongitude();
-                }
-            }
-        }*/
-
-            if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            if (mLastLocation != null) {
-                presenter.setCurrentLocation(mLastLocation.getLatitude(), (mLastLocation.getLongitude()));
-            }
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             if (!provider.contains("gps")) {
+                Toast.makeText(this, "You have to enable gps to use this attribute.", Toast.LENGTH_LONG).show();
                 Intent i = new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
                 startActivity(i);
-                Toast.makeText(this, "You have to enable gps to use this attribute.", Toast.LENGTH_SHORT).show();
             } else {
-                findLoacationIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(presenter.getLocationUri()));
-                this.startActivity(findLoacationIntent);
+                if (mLastLocation != null) {
+                    presenter.setCurrentLocation(mLastLocation.getLatitude(), (mLastLocation.getLongitude()));
+                }
+                presenter.currentLocation();
             }
         } else {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_GPS_REQUEST);
         }
+    }
+
+    @Override
+    public void callFindLocation(String url) {
+        findLoacationIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+        this.startActivity(findLoacationIntent);
     }
 
     @Override
@@ -308,21 +294,16 @@ public class TouristDestinationSingleActivity extends AppCompatActivity implemen
         switch (requestCode) {
             case LOCATION_GPS_REQUEST: {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
-                    if (mLastLocation != null) {
-                       presenter.setCurrentLocation(mLastLocation.getLatitude(), (mLastLocation.getLongitude()));
-                    }
                     if (!provider.contains("gps")) {
+                        Toast.makeText(this, "You have to enable gps to use this attribute.", Toast.LENGTH_LONG).show();
                         Intent i = new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
                         startActivity(i);
-                        Toast.makeText(this, "You have to enable gps to use this attribute.", Toast.LENGTH_SHORT).show();
                     } else {
-                        findLoacationIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(presenter.getLocationUri()));
-                        this.startActivity(findLoacationIntent);
+                        if (mLastLocation != null) {
+                            presenter.setCurrentLocation(mLastLocation.getLatitude(), (mLastLocation.getLongitude()));
+                        }
+                        presenter.currentLocation();
                     }
-
-                } else {
-                    Toast.makeText(this, "GPS need to be turned on to use this atribute.", Toast.LENGTH_SHORT).show();
                 }
                 break;
             }
@@ -381,7 +362,7 @@ public class TouristDestinationSingleActivity extends AppCompatActivity implemen
     }
 
     @Override
-    public void getRatings(List<Boolean> ratings) {
+    public void showRatings(List<Boolean> ratings) {
 
         if (ratings.get(1)) {
             ivStarOne.setImageResource(R.mipmap.subcategory_star_white_big);
@@ -456,9 +437,13 @@ public class TouristDestinationSingleActivity extends AppCompatActivity implemen
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        GoogleMap mMap = googleMap;
+        mMap = googleMap;
+        presenter.setMapLocation();
+    }
 
-        LatLng myLocation = new LatLng(presenter.getLocatinLat(), presenter.getLocatinLng());
+    @Override
+    public void onMapLocation(Double latLoc, Double lngLoc) {
+        LatLng myLocation = new LatLng(latLoc, lngLoc);
         mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
         mMap.addMarker(new MarkerOptions().position(myLocation).title("Location").icon(BitmapDescriptorFactory.fromBitmap(
                 BitmapFactory.decodeResource(getResources(), R.mipmap.pin_zeleni))));
@@ -466,7 +451,6 @@ public class TouristDestinationSingleActivity extends AppCompatActivity implemen
         CameraPosition cameraPosition = new CameraPosition.Builder().target(myLocation).zoom(12).build();
         mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
     }
-
 
     @Override
     public void onLocationChanged(android.location.Location location) {

@@ -9,6 +9,6 @@ import android.view.View;
 
 public interface SharePresenter {
     void initialize(String image, String title);
-    String setTitle();
+    void setTitle();
     Bitmap getBitmapFromView(View view);
 }

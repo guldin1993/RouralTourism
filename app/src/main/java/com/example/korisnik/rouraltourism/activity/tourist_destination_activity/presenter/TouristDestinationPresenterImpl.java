@@ -117,23 +117,7 @@ public class TouristDestinationPresenterImpl implements TouristDestinationPresen
         flagStarList.add(starFlagThree);
         flagStarList.add(starFlagFour);
         flagStarList.add(starFlagFive);
-        touristDestinationView.getRatings(flagStarList);
-    }
-
-    @Override
-    public String getLocationUri() {
-        //return uri = String.format(Locale.ENGLISH, "geo:%f,%f", location.getMeta().getLoc().getLat(), location.getMeta().getLoc().getLng());
-        return uri = "http://maps.google.com/maps?f=d&hl=en&saddr="+latLoc+","+lngLoc+"&daddr="+location.getMeta().getLoc().getLat()+","+location.getMeta().getLoc().getLng();
-    }
-
-    @Override
-    public Double getLocatinLat() {
-        return location.getMeta().getLoc().getLat();
-    }
-
-    @Override
-    public Double getLocatinLng() {
-        return location.getMeta().getLoc().getLng();
+        touristDestinationView.showRatings(flagStarList);
     }
 
     @Override
@@ -142,15 +126,15 @@ public class TouristDestinationPresenterImpl implements TouristDestinationPresen
         lngLoc = lng;
     }
 
-   @Override
-    public void currentLocation(){
-        uri = "http://maps.google.com/maps?f=d&hl=en&saddr="+latLoc+","+lngLoc+"&daddr="+location.getMeta().getLoc().getLat()+","+location.getMeta().getLoc().getLng();
-        touristDestinationView.callFindLocation();
+    @Override
+    public void currentLocation() {
+        uri = "http://maps.google.com/maps?f=d&hl=en&saddr=" + latLoc + "," + lngLoc + "&daddr=" + location.getMeta().getLoc().getLat() + "," + location.getMeta().getLoc().getLng();
+        touristDestinationView.callFindLocation(uri);
     }
 
     @Override
     public void setImageId(int id) {
-        switch (id){
+        switch (id) {
             case R.id.iv_cover_image:
                 touristDestinationView.callImageActivity(location.getImages().getImageZero(), title);
                 break;
@@ -176,5 +160,10 @@ public class TouristDestinationPresenterImpl implements TouristDestinationPresen
     @Override
     public void setTitle() {
         touristDestinationView.showAppBarTitle(title);
+    }
+
+    @Override
+    public void setMapLocation() {
+        touristDestinationView.onMapLocation(location.getMeta().getLoc().getLat(), location.getMeta().getLoc().getLng());
     }
 }
