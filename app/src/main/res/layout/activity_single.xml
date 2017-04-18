@@ -7,12 +7,16 @@
     tools:context=".activity.tourist_destination_activity.TouristDestinationSingleActivity">
 
         <android.support.v7.widget.Toolbar
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:navigationIcon="@mipmap/ic_launcher"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:minHeight="47dp"
+            android:background="@color/lighter_black"
+            android:logo="@mipmap/ic_launcher"
+            app:theme="@style/ThemeOverlay.AppCompat.Dark" />
 
     <include layout="@layout/content_single" />
 

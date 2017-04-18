@@ -8,6 +8,9 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="icon">@mipmap/ic_launcher</item>
         <item name="android:icon">@mipmap/ic_launcher</item>
+
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
     </style>
 
     <style name="AppTheme.NoActionBar">

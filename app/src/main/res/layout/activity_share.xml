@@ -7,15 +7,29 @@
     android:layout_height="match_parent"
     tools:context="com.example.korisnik.rouraltourism.activity.share_activity.ShareActivity">
 
+    <android.support.v7.widget.Toolbar
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:minHeight="47dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:background="@color/lighter_black"
+        android:logo="@mipmap/ic_launcher"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark" />
+
     <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/iv_cover_image"
         android:layout_width="match_parent"
         android:layout_height="@dimen/sdv_image_hight"
         android:background="@color/lighter_black"
+        fresco:actualImageScaleType="fitXY"
+        android:layout_below="@+id/toolbar"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        fresco:actualImageScaleType="fitXY" />
+        android:layout_alignParentStart="true" />
 
     <ImageView
         android:id="@+id/iv_take_photo"
@@ -44,7 +58,7 @@
     <LinearLayout
         android:id="@+id/ll_share_online"
         android:layout_width="match_parent"
-        android:layout_height="55dp"
+        android:layout_height="65dp"
         android:layout_below="@id/et_share_content"
         android:layout_gravity="center_vertical"
         android:gravity="center_vertical"

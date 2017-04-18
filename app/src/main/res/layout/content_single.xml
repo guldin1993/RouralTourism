@@ -15,6 +15,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <android.support.v7.widget.Toolbar
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:minHeight="47dp"
+            android:background="@color/lighter_black"
+            android:logo="@mipmap/ic_launcher"
+            app:theme="@style/ThemeOverlay.AppCompat.Dark" />
+
         <LinearLayout
             android:id="@+id/ll_cell"
             android:layout_width="wrap_content"
@@ -78,10 +90,8 @@
             android:id="@+id/iv_cover_image"
             android:layout_width="match_parent"
             android:layout_height="@dimen/sdv_image_hight"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
             fresco:actualImageScaleType="fitXY"
+            android:layout_below="@id/toolbar"
             android:paddingBottom="@dimen/content_single_element_bottom_margin"
             fresco:placeholderImage="@mipmap/foto_bg" />
 
@@ -89,7 +99,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingTop="@dimen/sdv_image_hight">
+            android:layout_below="@id/iv_cover_image"
+>
 
             <TextView
                 android:id="@+id/tv_title_cell"
@@ -161,8 +172,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:paddingLeft="@dimen/location_image_one_two_lr_margin"
-                android:paddingRight="@dimen/location_image_one_two_lr_margin"
+                android:layout_marginLeft="@dimen/text_view_title_bottom_margin"
+                android:layout_marginRight="@dimen/text_view_title_bottom_margin"
                 android:paddingBottom="@dimen/text_view_title_bottom_margin"
                 android:paddingTop="@dimen/text_view_title_bottom_margin">
 
@@ -171,9 +182,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="110dp"
                     android:layout_weight="1"
-                    android:layout_marginLeft="@dimen/location_image_one_two_lr_margin"
-                    android:layout_marginRight="@dimen/location_image_one_two_lr_margin"
-                    fresco:actualImageScaleType="fitCenter"
+                    fresco:actualImageScaleType="fitXY"
                     fresco:placeholderImage="@mipmap/foto_bg" />
 
                 <com.facebook.drawee.view.SimpleDraweeView
@@ -181,9 +190,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="110dp"
                     android:layout_weight="1"
-                    android:layout_marginLeft="@dimen/location_image_one_two_lr_margin"
-                    android:layout_marginRight="@dimen/location_image_one_two_lr_margin"
-                    fresco:actualImageScaleType="fitCenter"
+                    android:layout_marginLeft="@dimen/text_view_title_bottom_margin"
+                    fresco:actualImageScaleType="fitXY"
                     fresco:placeholderImage="@mipmap/foto_bg" />
 
                 <com.facebook.drawee.view.SimpleDraweeView
@@ -191,9 +199,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="110dp"
                     android:layout_weight="1"
-                    android:layout_marginLeft="@dimen/location_image_one_two_lr_margin"
-                    android:layout_marginRight="@dimen/location_image_one_two_lr_margin"
-                    fresco:actualImageScaleType="fitCenter"
+                    android:layout_marginLeft="@dimen/text_view_title_bottom_margin"
+                    fresco:actualImageScaleType="fitXY"
                     fresco:placeholderImage="@mipmap/foto_bg" />
 
             </LinearLayout>
@@ -237,7 +244,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/left_right_bottom_margin_elements"
                     android:orientation="horizontal"
-                    android:paddingTop="@dimen/address_padding">
+                    android:paddingTop="@dimen/address_padding"
+                    android:paddingBottom="8dp">
 
                     <ImageView
                         android:layout_width="@dimen/source_image_size"
@@ -263,7 +271,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/left_right_bottom_margin_elements"
                     android:orientation="horizontal"
-                    android:paddingTop="@dimen/address_padding">
+                    android:paddingTop="@dimen/address_padding"
+                    android:paddingBottom="8dp">
 
                     <ImageView
                         android:layout_width="@dimen/source_image_size"

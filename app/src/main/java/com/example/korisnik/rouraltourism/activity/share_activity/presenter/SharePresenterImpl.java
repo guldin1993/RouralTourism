@@ -37,7 +37,6 @@ public class SharePresenterImpl implements SharePresenter {
         this.shareView = shareView;
     }
 
-
     @Override
     public void initialize(String image, String title) {
         this.title = title;
@@ -49,13 +48,6 @@ public class SharePresenterImpl implements SharePresenter {
         shareView.getCoverImage(uri);
         shareView.getTitle(this.title);
         shareView.getEditTextText(editText);
-
-
-
-        /*ImageRequest imageRequest=ImageRequest.fromUri(uri);
-        CacheKey cacheKey=DefaultCacheKeyFactory.getInstance().getEncodedCacheKey(imageRequest);
-        BinaryResource resource = ImagePipelineFactory.getInstance().getMainDiskStorageCache().getResource(cacheKey);
-        File file=((FileBinaryResource)resource).getFile();*/
     }
 
     @Override
@@ -63,31 +55,14 @@ public class SharePresenterImpl implements SharePresenter {
         shareView.showAppBarTitle(title);
     }
 
-    public Bitmap getBitmapFromView(View view) {
-        //Define a bitmap with the same size as the view
-        Bitmap returnedBitmap = Bitmap.createBitmap(view.getWidth(),      view.getHeight(), Bitmap.Config.ARGB_8888);
-        //Bind a canvas to it
-        Canvas canvas = new Canvas(returnedBitmap);
-        //Get the view's background
-        Drawable bgDrawable = view.getBackground();
-        if (bgDrawable != null)
-            //has background drawable, then draw it on the canvas
-            bgDrawable.draw(canvas);
-        else
-            //does not have background drawable, then draw white background on the canvas
-            canvas.drawColor(Color.WHITE);
-        // draw the view on the canvas
-        view.draw(canvas);
-        //return the bitmap
-        return returnedBitmap;
-    }
-
-    public Uri getImageUri(Context inContext, Bitmap inImage) {
+    @Override
+    public void getImageUri(Context inContext, Bitmap inImage) {
+        Uri uri;
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
-
         String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
-        return Uri.parse(path);
+        uri = Uri.parse(path);
+        shareView.sharePicture(uri);
     }
 }
 

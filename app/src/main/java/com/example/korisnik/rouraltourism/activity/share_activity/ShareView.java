@@ -11,4 +11,5 @@ public interface ShareView {
     void getTitle(String title);
     void getEditTextText(String text);
     void showAppBarTitle(String title);
+    void sharePicture(Uri uri);
 }

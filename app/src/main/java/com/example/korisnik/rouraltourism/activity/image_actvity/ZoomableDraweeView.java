@@ -40,8 +40,6 @@ public class ZoomableDraweeView extends SimpleDraweeView {
                 float scaleFactor = detector.getScaleFactor();
                 float newScale = mCurrentScale * scaleFactor;
                 if (newScale > 1.0f) {
-                    // We initialize this lazily so that we don't have to register (and force the user
-                    // to unregister) a global layout listener on the view.
                     if (mMidX == 0.0f) {
                         mMidX = getWidth() / 2.0f;
                     }

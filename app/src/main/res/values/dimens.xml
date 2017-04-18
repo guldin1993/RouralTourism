@@ -1,4 +1,5 @@
 <resources>
+    <!--cell_roular_tourism-->
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="location_image_width">60dp</dimen>
     <dimen name="location_image_height">60dp</dimen>
@@ -11,15 +12,16 @@
     <dimen name="grey_view_line_height">1dp</dimen>
     <dimen name="stars_margin">2dp</dimen>
 
+    <!--content_single-->
     <dimen name="source_image_size">16dp</dimen>
     <dimen name="source_image_left_margin">8dp</dimen>
     <dimen name="source_image_bottom_margin">2dp</dimen>
     <dimen name="star_size">10dp</dimen>
-    <dimen name="text_view_title_bottom_margin">5dp</dimen>
-    <dimen name="address_padding">12dp</dimen>
-    <dimen name="sdv_image_hight">190dp</dimen>
+    <dimen name="text_view_title_bottom_margin">10dp</dimen>
+    <dimen name="address_padding">8dp</dimen>
+    <dimen name="sdv_image_hight">210dp</dimen>
     <dimen name="ico_image_left_margin">5dp</dimen>
-    <dimen name="ll_stars_holder">140dp</dimen>
+    <dimen name="ll_stars_holder">200dp</dimen>
     <dimen name="ll_stars_holder_padding">6dp</dimen>
     <dimen name="content_single_element_bottom_margin">9dp</dimen>
     <dimen name="star_right_margin">2dp</dimen>
@@ -30,7 +32,7 @@
 
     <!--activity_share-->
     <dimen name="take_photo_size">50dp</dimen>
-    <dimen name="take_photo_marginTop">50dp</dimen>
+    <dimen name="take_photo_marginTop">105dp</dimen>
     <dimen name="edit_text_share_content_padding">10dp</dimen>
     <dimen name="ll_share_online_padding">7dp</dimen>
     <dimen name="button_share_padding">7dp</dimen>

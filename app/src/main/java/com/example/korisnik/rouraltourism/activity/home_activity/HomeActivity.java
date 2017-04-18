@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 
 import com.example.korisnik.rouraltourism.R;
 import com.example.korisnik.rouraltourism.activity.home_activity.adapter.ListRecyclerAdapter;
@@ -22,9 +23,12 @@ import butterknife.ButterKnife;
 
 public class HomeActivity extends AppCompatActivity implements HomeView, ListRecyclerAdapter.RecyclerListener {
     public static final String EXTRA_TO_TOURIST_DESTINATION_SINGLE = "location";
+    public static final String TOOLBAR_TITLE = "Ruralni turizam";
 
     @BindView(R.id.my_recycler_view)
     RecyclerView recyclerView;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
 
     @Inject
     HomePresenter presenter;
@@ -45,7 +49,8 @@ public class HomeActivity extends AppCompatActivity implements HomeView, ListRec
         recyclerView.setHasFixedSize(true);
         adapter.setListener(this);
         recyclerView.setAdapter(adapter);
-        //getActionBar().setIcon(R.mipmap.ic_launcher);
+        toolbar.setLogo(R.mipmap.ic_launcher);
+        toolbar.setTitle(TOOLBAR_TITLE);
     }
 
     @Override

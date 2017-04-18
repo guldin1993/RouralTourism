@@ -5,10 +5,8 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.BitmapFactory;
-import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.MainThread;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -131,6 +129,9 @@ public class TouristDestinationSingleActivity extends AppCompatActivity implemen
     @BindView(R.id.btn_expand)
     Button expandColapseButton;
 
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+
     @Inject
     TouristDestinationPresenter presenter;
 
@@ -138,11 +139,12 @@ public class TouristDestinationSingleActivity extends AppCompatActivity implemen
 
     private GoogleApiClient mGoogleApiClient;
 
-    private Intent findLoacationIntent;
+    private Intent findLocationIntent;
 
     private android.location.Location mLastLocation;
 
     private GoogleMap mMap;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -156,10 +158,9 @@ public class TouristDestinationSingleActivity extends AppCompatActivity implemen
         presenter.initialize((Location) getIntent().getParcelableExtra(HomeActivity.EXTRA_TO_TOURIST_DESTINATION_SINGLE));
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-        /*Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setLogo(R.mipmap.ic_launcher);*/
         presenter.setTitle();
-        getSupportActionBar().setLogo(R.mipmap.ic_launcher);
+        toolbar.setLogo(R.mipmap.ic_launcher);
+        toolbar.bringToFront();
 
         ivCoverImage.setOnClickListener(this);
         ivLocation1.setOnClickListener(this);
@@ -185,7 +186,7 @@ public class TouristDestinationSingleActivity extends AppCompatActivity implemen
 
     @Override
     public void showAppBarTitle(String title) {
-        setTitle(title);
+        toolbar.setTitle(title);
     }
 
     @OnClick(R.id.btn_expand)
@@ -274,7 +275,8 @@ public class TouristDestinationSingleActivity extends AppCompatActivity implemen
             } else {
                 if (mLastLocation != null) {
                     presenter.setCurrentLocation(mLastLocation.getLatitude(), (mLastLocation.getLongitude()));
-                }
+                } else
+                    presenter.setCurrentLocation(45.5462462, 18.5487755);
                 presenter.currentLocation();
             }
         } else {
@@ -284,8 +286,8 @@ public class TouristDestinationSingleActivity extends AppCompatActivity implemen
 
     @Override
     public void callFindLocation(String url) {
-        findLoacationIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-        this.startActivity(findLoacationIntent);
+        findLocationIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+        this.startActivity(findLocationIntent);
     }
 
     @Override
@@ -301,7 +303,8 @@ public class TouristDestinationSingleActivity extends AppCompatActivity implemen
                     } else {
                         if (mLastLocation != null) {
                             presenter.setCurrentLocation(mLastLocation.getLatitude(), (mLastLocation.getLongitude()));
-                        }
+                        } else
+                            presenter.setCurrentLocation(45.5462462, 18.5487755);
                         presenter.currentLocation();
                     }
                 }
@@ -400,7 +403,7 @@ public class TouristDestinationSingleActivity extends AppCompatActivity implemen
         Uri uri;
 
         for (int i = 1; i < pictures.size(); i++) {
-            if (pictures.get(i).length() <= 4 && pictures.get(i).length() >= 2 || pictures.get(i) == "1421327104") {
+            if (pictures.get(i).equals("1421327104") || (pictures.get(i).length() <= 4 && pictures.get(i).length() >= 2)) {
                 uri = Uri.parse(pictures.get(0) + pictures.get(i));
 
                 if (i == 1) {

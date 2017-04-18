@@ -6,6 +6,17 @@
     android:background="@color/lighter_black"
     tools:context="com.example.korisnik.rouraltourism.activity.image_actvity.ImageActivity">
 
+    <android.support.v7.widget.Toolbar
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="47dp"
+        android:background="@color/lighter_black"
+        android:logo="@mipmap/ic_launcher"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark" />
+
     <RelativeLayout
         android:id="@+id/rl_layout"
         android:layout_width="match_parent"
