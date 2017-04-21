@@ -138,7 +138,6 @@ public class ShareActivity extends AppCompatActivity implements ShareView {
         if (ImagePipelineFactory.getInstance().getMainFileCache().hasKey(cacheKey)) {
             BinaryResource resource = ImagePipelineFactory.getInstance().getMainFileCache().getResource(cacheKey);
             File cacheFile = ((FileBinaryResource) resource).getFile();
-
             try {
                 inputStream = new FileInputStream(cacheFile);
             } catch (FileNotFoundException e) {
@@ -150,7 +149,7 @@ public class ShareActivity extends AppCompatActivity implements ShareView {
     }
 
     @Override
-    public void sharePicture(Uri uri){
+    public void sharePicture(Uri uri) {
         Intent shareIntent = new Intent(Intent.ACTION_SEND);
         shareIntent.setType("*/*");
         shareIntent.putExtra(Intent.EXTRA_SUBJECT, "RouralTourism");
@@ -169,7 +168,6 @@ public class ShareActivity extends AppCompatActivity implements ShareView {
                 shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
                 startActivity(Intent.createChooser(shareIntent, "Share via"));
             }
-
         }
     }
 

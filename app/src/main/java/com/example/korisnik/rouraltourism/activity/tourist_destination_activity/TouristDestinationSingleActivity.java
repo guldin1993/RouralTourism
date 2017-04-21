@@ -137,14 +137,11 @@ public class TouristDestinationSingleActivity extends AppCompatActivity implemen
 
     private boolean expandFlag = false;
 
-    private GoogleApiClient mGoogleApiClient;
-
     private Intent findLocationIntent;
 
     private android.location.Location mLastLocation;
-
     private GoogleMap mMap;
-
+    private GoogleApiClient mGoogleApiClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -166,15 +163,14 @@ public class TouristDestinationSingleActivity extends AppCompatActivity implemen
         ivLocation1.setOnClickListener(this);
         ivLocation2.setOnClickListener(this);
         ivLocation3.setOnClickListener(this);
+    }
 
+    protected void onStart() {
         if (mGoogleApiClient == null) {
             mGoogleApiClient = new GoogleApiClient.Builder(this)
                     .addApi(LocationServices.API)
                     .build();
         }
-    }
-
-    protected void onStart() {
         mGoogleApiClient.connect();
         super.onStart();
     }
