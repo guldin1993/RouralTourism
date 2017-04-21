@@ -1,12 +1,15 @@
 package com.example.korisnik.rouraltourism.activity.tourist_destination_activity;
 
 import android.Manifest;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -262,17 +265,45 @@ public class TouristDestinationSingleActivity extends AppCompatActivity implemen
     public void onLocationFindClick() {
         String provider = android.provider.Settings.Secure.getString(getContentResolver(), android.provider.Settings.Secure.LOCATION_PROVIDERS_ALLOWED);
         mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+        AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            if (!provider.contains("gps")) {
-                Toast.makeText(this, "You have to enable gps to use this attribute.", Toast.LENGTH_LONG).show();
-                Intent i = new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                startActivity(i);
+            if (!provider.contains("gps") && !provider.contains("wifi")) {
+                //Toast.makeText(context, "You have to enable gps or WIFI to use this attribute.", Toast.LENGTH_LONG).show();
+                builder1.setMessage("You have to enable GPS or WIFI to use this attribute.");
+                builder1.setCancelable(true);
+                builder1.setNeutralButton("WIFI",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                                Intent i = new Intent(Settings.ACTION_WIFI_SETTINGS);
+                                startActivity(i);
+                            }
+                        });
+
+                builder1.setNeutralButton("GPS",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                                Intent i = new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                                startActivity(i);
+                            }
+                        });
+
+                builder1.setNegativeButton("Cancle",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+
+                AlertDialog alert11 = builder1.create();
+                alert11.show();
             } else {
                 if (mLastLocation != null) {
                     presenter.setCurrentLocation(mLastLocation.getLatitude(), (mLastLocation.getLongitude()));
                 } else
-                    presenter.setCurrentLocation(45.5462462, 18.5487755);
+                    Toast.makeText(this, "Error occured, location wasn't found!", Toast.LENGTH_SHORT).show();
                 presenter.currentLocation();
             }
         } else {
